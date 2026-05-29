@@ -182,6 +182,37 @@ export function cloudinaryVideoThumbnailUrl(
   return `https://res.cloudinary.com/${CLOUD_NAME ?? 'PLACEHOLDER'}/video/upload/so_${start},w_${width},h_${height},c_fill,q_auto,f_jpg/${versionSegment}${id}.jpg`
 }
 
+/**
+ * Recorta un clip corto desde una URL de delivery existente (sin rearmar publicId).
+ * Útil cuando el publicId tiene caracteres especiales (ej. ñ) ya codificados en la URL.
+ */
+export function cloudinaryVideoPreviewFromDeliveryUrl(
+  deliveryUrl: string,
+  options: Pick<CloudinaryVideoPreviewOptions, 'start' | 'duration' | 'width' | 'height'> = {}
+): string {
+  const {
+    start = 0,
+    duration = 5,
+    width = 480,
+    height = 854,
+  } = options
+
+  const transforms = [
+    `so_${start}`,
+    `du_${duration}`,
+    `w_${width}`,
+    `h_${height}`,
+    'c_fill',
+    'g_center',
+    'q_auto:eco',
+    'f_mp4',
+    'vc_h264',
+    'ac_none',
+  ].join(',')
+
+  return deliveryUrl.replace('/video/upload/', `/video/upload/${transforms}/`)
+}
+
 function normalizeVideoPublicId(publicId: string): string {
   return publicId.replace(/\.mp4$/i, '')
 }

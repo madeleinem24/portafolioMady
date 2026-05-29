@@ -151,7 +151,7 @@ export default function AnimationCell({
               muted
               loop
               playsInline
-              preload="metadata"
+              preload="none"
               className="anim-cell__video"
             />
             <div className="anim-cell__scrim" aria-hidden="true" />

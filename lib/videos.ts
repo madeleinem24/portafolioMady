@@ -5,6 +5,7 @@
 
 import {
   cloudinaryVideoDeliveryUrl,
+  cloudinaryVideoPreviewFromDeliveryUrl,
   cloudinaryVideoPreviewUrl,
   cloudinaryVideoThumbnailUrl,
 } from '@/lib/cloudinary'
@@ -36,7 +37,7 @@ export const productionVideos: ProductionVideoData[] = [
     publicId:      'Escenario_cafe_miau_720p_rhrtat',
     version:       1779994756,
     cloudinaryUrl: 'https://res.cloudinary.com/dlgsegjay/video/upload/v1779994756/Escenario_cafe_miau_720p_rhrtat.mp4',
-    preview:       { start: 0, duration: 25 },
+    preview:       { start: 0, duration: 10 },
     videoAlt:      'Producción audiovisual: Escenario Café Miau',
   },
   {
@@ -47,7 +48,7 @@ export const productionVideos: ProductionVideoData[] = [
     publicId:      'Examen_2_virus_minecraft_720p_zq5qra',
     version:       1779994756,
     cloudinaryUrl: 'https://res.cloudinary.com/dlgsegjay/video/upload/v1779994756/Examen_2_virus_minecraft_720p_zq5qra.mp4',
-    preview:       { start: 0, duration: 25 },
+    preview:       { start: 0, duration: 10 },
     videoAlt:      'Producción universitaria: Examen 2 Virus Minecraft',
   },
   {
@@ -58,7 +59,7 @@ export const productionVideos: ProductionVideoData[] = [
     publicId:      'Teaser_720p_fjqjqn',
     version:       1779994756,
     cloudinaryUrl: 'https://res.cloudinary.com/dlgsegjay/video/upload/v1779994756/Teaser_720p_fjqjqn.mp4',
-    preview:       { start: 0, duration: 25 },
+    preview:       { start: 0, duration: 10 },
     videoAlt:      'Teaser de producción audiovisual',
   },
   {
@@ -69,7 +70,7 @@ export const productionVideos: ProductionVideoData[] = [
     publicId:      'Trazos_de_historia_Guayaquil_720p_bicqah',
     version:       1779994760,
     cloudinaryUrl: 'https://res.cloudinary.com/dlgsegjay/video/upload/v1779994760/Trazos_de_historia_Guayaquil_720p_bicqah.mp4',
-    preview:       { start: 5, duration:  30 },
+    preview:       { start: 5, duration: 12 },
     videoAlt:      'Documental: Trazos de historia, arte en el corazón de Guayaquil',
   }
 ]
@@ -156,7 +157,7 @@ export const ugcVideos: UgcVideoData[] = [
     publicId:      '_CORREGIDO__MITOS_YVERDADES_SOBRE_EL_VACIO_720p_hveum1',
     version:       1779994740,
     cloudinaryUrl: 'https://res.cloudinary.com/dlgsegjay/video/upload/v1779994740/_CORREGIDO__MITOS_YVERDADES_SOBRE_EL_VACIO_720p_hveum1.mp4',
-    preview:       { start: 11, duration: 20 },
+    preview:       { start: 11, duration: 8 },
     videoAlt:      'Reel UGC Cortefino: mitos y verdades sobre el vacío',
     likeCount:     '',
     commentCount:  '',
@@ -186,7 +187,7 @@ export const ugcVideos: UgcVideoData[] = [
     publicId:      'recomendaciones_cortes_720p_dwgf0d',
     version:       1779994740,
     cloudinaryUrl: 'https://res.cloudinary.com/dlgsegjay/video/upload/v1779994740/recomendaciones_cortes_720p_dwgf0d.mp4',
-    preview:       { start: 20, duration: 25 },
+    preview:       { start: 20, duration: 8 },
     videoAlt:      'Reel UGC Cortefino: recomendaciones de cortes de carne',
     likeCount:     '',
     commentCount:  '',
@@ -216,7 +217,7 @@ export const ugcVideos: UgcVideoData[] = [
     publicId:      'Vino_cortes_720p_svkywb',
     version:       1779994740,
     cloudinaryUrl: 'https://res.cloudinary.com/dlgsegjay/video/upload/v1779994740/Vino_cortes_720p_svkywb.mp4',
-    preview:       { start: 10, duration: 15 },
+    preview:       { start: 10, duration: 8 },
     videoAlt:      'Reel UGC Cortefino: maridaje de vino y cortes de carne',
     likeCount:     '',
     commentCount:  '',
@@ -256,6 +257,8 @@ export function getProductionVideoPreviewUrl(video: ProductionVideoData): string
     start:    video.preview.start,
     duration: video.preview.duration,
     version:  video.version,
+    width:    640,
+    height:   360,
   })
 }
 
@@ -269,14 +272,21 @@ export function getProductionVideoPosterUrl(video: ProductionVideoData): string 
 }
 
 export function getAnimationVideoPreviewUrl(video: AnimationVideoData): string | undefined {
-  // Usar cloudinaryUrl directa como fuente primaria: evita problemas de
-  // codificación de caracteres especiales (ej. ñ en publicId) en la URL generada.
-  if (video.cloudinaryUrl) return video.cloudinaryUrl
+  if (video.cloudinaryUrl && video.preview) {
+    return cloudinaryVideoPreviewFromDeliveryUrl(video.cloudinaryUrl, {
+      start:    video.preview.start,
+      duration: video.preview.duration,
+      width:    480,
+      height:   480,
+    })
+  }
   if (!video.publicId) return undefined
   return cloudinaryVideoPreviewUrl(video.publicId, {
     start:    video.preview.start,
     duration: video.preview.duration,
     version:  video.version,
+    width:    480,
+    height:   480,
   })
 }
 

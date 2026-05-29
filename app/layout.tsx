@@ -9,6 +9,7 @@ import type { Metadata, Viewport } from 'next'
 import localFont from 'next/font/local'
 import Script from 'next/script'
 
+import { siteUrl } from '@/site.config'
 import Navbar           from '@/components/layout/Navbar'
 import CustomCursor     from '@/components/layout/CustomCursor'
 import ScrollProgressBar from '@/components/layout/ScrollProgressBar'
@@ -47,6 +48,7 @@ const unbounded = localFont({
 // ── METADATA ──────────────────────────────────────────────────────────────────
 
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
   title: {
     default:  'Madeleine Morales — Diseñadora Gráfica',
     template: '%s — Madeleine Morales',
