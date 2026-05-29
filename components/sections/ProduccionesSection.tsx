@@ -11,12 +11,13 @@ import { useEffect, useRef } from 'react'
 import UgcProductionCell from '@/components/ui/UgcProductionCell'
 import UgcKeyVisualCell  from '@/components/ui/UgcKeyVisualCell'
 import SectionLabel      from '@/components/ui/SectionLabel'
+import { assetPath } from '@/lib/asset-path'
 import { productionVideos } from '@/lib/videos'
 
 const FOTOS = [
-  { src: '/ugc/fotografias/dsc1038.webp', alt: 'Fotografía editorial — producción audiovisual' },
-  { src: '/ugc/fotografias/dsc0546.webp', alt: 'Fotografía de producción — Madeleine Morales' },
-  { src: '/ugc/fotografias/dsc1048.webp', alt: 'Fotografía editorial — sesión de producción' },
+  { src: assetPath('/ugc/fotografias/dsc1038.webp'), alt: 'Fotografía editorial — producción audiovisual' },
+  { src: assetPath('/ugc/fotografias/dsc0546.webp'), alt: 'Fotografía de producción — Madeleine Morales' },
+  { src: assetPath('/ugc/fotografias/dsc1048.webp'), alt: 'Fotografía editorial — sesión de producción' },
 ]
 
 export default function ProduccionesSection() {

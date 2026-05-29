@@ -3,6 +3,7 @@
 // Editar aquí para cambiar cualquier copy sin tocar componentes.
 // ─────────────────────────────────────────────────────────────────────────────
 
+import { assetPath } from '@/lib/asset-path'
 import type {
   HeroCopy,
   AboutCopy,
@@ -75,7 +76,7 @@ export const ABOUT_COPY: AboutCopy = {
     },
   ],
   photo: {
-    src: '/images/about-me.webp',
+    src: assetPath('/images/about-me.webp'),
     alt: 'Madeleine Morales, diseñadora gráfica, Guayaquil',
   },
   softwareTags: [

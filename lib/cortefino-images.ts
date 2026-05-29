@@ -3,6 +3,7 @@
 // Assets: public/ugc/cortefino/ (ADR-006 — URL directa, sin Cloudinary)
 // ─────────────────────────────────────────────────────────────────────────────
 
+import { assetPath } from '@/lib/asset-path'
 import type {
   CortefinoCarouselData,
   CortefinoCarouselSliderData,
@@ -11,14 +12,14 @@ import type {
   CortefinoStaticData,
 } from '@/lib/types'
 
-/** Raíz pública de assets Cortefino */
+/** Raíz pública de assets Cortefino (sin basePath; usar cortefinoImagePath). */
 export const CORTEFINO_IMAGE_BASE = '/ugc/cortefino'
 
 export function cortefinoImagePath(
   folder: CortefinoCarouselData['folder'] | CortefinoStaticData['folder'],
   file: string,
 ): string {
-  return `${CORTEFINO_IMAGE_BASE}/${folder}/${file}`
+  return assetPath(`${CORTEFINO_IMAGE_BASE}/${folder}/${file}`)
 }
 
 function slide(

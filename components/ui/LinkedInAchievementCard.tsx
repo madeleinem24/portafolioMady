@@ -6,6 +6,8 @@
 
 import Image from 'next/image'
 
+import { assetPath } from '@/lib/asset-path'
+
 const LINKEDIN_URL =
   'https://www.linkedin.com/posts/madeleine-morales-diaz-773333117_retrodigital-ecuador-design-activity-7424223803481690112-eE4-'
 
@@ -28,7 +30,7 @@ export default function LinkedInAchievementCard() {
       <div className="linkedin-card__photos" aria-hidden="true">
         <div className="linkedin-card__photo">
           <Image
-            src="/ugc/tonimix/linkedin-1.webp"
+            src={assetPath('/ugc/tonimix/linkedin-1.webp')}
             alt=""
             fill
             unoptimized
@@ -37,7 +39,7 @@ export default function LinkedInAchievementCard() {
         </div>
         <div className="linkedin-card__photo">
           <Image
-            src="/ugc/tonimix/linkedin-2.webp"
+            src={assetPath('/ugc/tonimix/linkedin-2.webp')}
             alt=""
             fill
             unoptimized
