@@ -48,8 +48,20 @@ function useBentoRevealed(cellRef: React.RefObject<HTMLDivElement | null>): bool
     sync()
 
     const mo = new MutationObserver(sync)
-    mo.observe(bento, { attributes: true, attributeFilter: ['class'] })
-    return () => mo.disconnect()
+    mo.observe(bento, { attributes: true, attributeFilter: ['class', 'style'] })
+
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) setRevealed(true)
+      },
+      { threshold: 0.08 },
+    )
+    io.observe(bento)
+
+    return () => {
+      mo.disconnect()
+      io.disconnect()
+    }
   }, [cellRef])
 
   return revealed
@@ -78,7 +90,7 @@ export default function AnimationCell({
     bentoRevealed &&
     isInView
 
-  // ── Viewport (mismo criterio que UgcTikTokCell) ─────────────────────────
+  // ── Autoplay al entrar en viewport (scroll) ─────────────────────────────
   useEffect(() => {
     if (!autoplay || !hasVideo) return
     const el = cellRef.current
@@ -86,28 +98,20 @@ export default function AnimationCell({
 
     const observer = new IntersectionObserver(
       ([entry]) => setIsInView(entry.isIntersecting),
-      { threshold: 0.12, rootMargin: '120px 0px' },
+      { threshold: 0.25, rootMargin: '0px 0px -8% 0px' },
     )
     observer.observe(el)
     return () => observer.disconnect()
   }, [autoplay, hasVideo])
 
-  // ── Reproducción controlada por viewport/interacción ────────────────────
+  // ── load() + play() al entrar en vista (mismo patrón que TikTokFrame) ───
   useEffect(() => {
     const el = videoRef.current
     if (!el || !previewUrl) return
 
+    el.load()
     if (shouldPlay) {
-      const play = () => {
-        void el.play().catch(() => {})
-      }
-
-      if (el.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) {
-        play()
-      } else {
-        el.addEventListener('canplay', play, { once: true })
-        return () => el.removeEventListener('canplay', play)
-      }
+      void el.play().catch(() => {})
     } else {
       el.pause()
     }
