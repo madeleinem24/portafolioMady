@@ -1,3 +1,7 @@
+# Monorepo de un solo paquete — sin esto pnpm falla en CI con "packages field missing"
+packages:
+  - '.'
+
 allowBuilds:
   sharp: true
   unrs-resolver: true
