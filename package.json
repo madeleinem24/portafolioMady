@@ -13,7 +13,8 @@
     "format":    "prettier --write .",
     "analyze":   "ANALYZE=true next build",
     "deploy":          "pnpm build && gh-pages -d out",
-    "compress-video":  "python videos/conversor_videos.py"
+    "compress-video":  "python videos/conversor_videos.py",
+    "compress-images": "python scripts/compress-public-images.py"
   },
   "dependencies": {
     "next": "^15.3.0",

@@ -28,7 +28,7 @@ export default function LinkedInAchievementCard() {
       <div className="linkedin-card__photos" aria-hidden="true">
         <div className="linkedin-card__photo">
           <Image
-            src="/ugc/tonimix/linkedin-1.jpg"
+            src="/ugc/tonimix/linkedin-1.webp"
             alt=""
             fill
             unoptimized
@@ -37,7 +37,7 @@ export default function LinkedInAchievementCard() {
         </div>
         <div className="linkedin-card__photo">
           <Image
-            src="/ugc/tonimix/linkedin-2.jpg"
+            src="/ugc/tonimix/linkedin-2.webp"
             alt=""
             fill
             unoptimized

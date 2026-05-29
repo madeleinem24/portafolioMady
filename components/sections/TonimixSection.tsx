@@ -9,10 +9,10 @@ import SectionLabel            from '@/components/ui/SectionLabel'
 import UgcKeyVisualCell        from '@/components/ui/UgcKeyVisualCell'
 
 const MERCH = [
-  { src: '/ugc/tonimix/merch/gorra.png',    alt: 'Gorra Tonimix — diseño retrodigital',   title: 'Gorra' },
-  { src: '/ugc/tonimix/merch/hoodie.png',   alt: 'Hoodie Chill Tonimix',                   title: 'Hoodie' },
-  { src: '/ugc/tonimix/merch/tote-bag.png', alt: 'Tote bag Tonimix',                        title: 'Tote bag' },
-  { src: '/ugc/tonimix/merch/camiseta.png', alt: 'Camiseta ToniChill Tonimix',              title: 'Camiseta' },
+  { src: '/ugc/tonimix/merch/gorra.webp',    alt: 'Gorra Tonimix — diseño retrodigital',   title: 'Gorra' },
+  { src: '/ugc/tonimix/merch/hoodie.webp',   alt: 'Hoodie Chill Tonimix',                   title: 'Hoodie' },
+  { src: '/ugc/tonimix/merch/tote-bag.webp', alt: 'Tote bag Tonimix',                        title: 'Tote bag' },
+  { src: '/ugc/tonimix/merch/camiseta.webp', alt: 'Camiseta ToniChill Tonimix',              title: 'Camiseta' },
 ]
 
 export default function TonimixSection() {
@@ -52,7 +52,7 @@ export default function TonimixSection() {
           <div className="toni-row toni-row--hero">
             <div className="toni-kv toni-kv--primary">
               <UgcKeyVisualCell
-                src="/ugc/tonimix/key-visual-1.jpg"
+                src="/ugc/tonimix/key-visual-1.webp"
                 alt="Key Visual Tonimix — campaña RetroDigital Ecuador, dirección de arte"
                 client="Tonimix"
                 title="Key Visual 01"
@@ -63,7 +63,7 @@ export default function TonimixSection() {
             </div>
             <div className="toni-mupi">
               <UgcKeyVisualCell
-                src="/ugc/tonimix/mupi.jpg"
+                src="/ugc/tonimix/mupi.webp"
                 alt="MUPI publicitario Tonimix — vía pública Guayaquil"
                 client="Tonimix"
                 title="MUPI"
@@ -79,7 +79,7 @@ export default function TonimixSection() {
             <LinkedInAchievementCard />
             <div className="toni-kv toni-kv--secondary">
               <UgcKeyVisualCell
-                src="/ugc/tonimix/key-visual-2.jpg"
+                src="/ugc/tonimix/key-visual-2.webp"
                 alt="Key Visual Tonimix 2 — composición editorial productos fondo azul"
                 client="Tonimix"
                 title="Key Visual 02"

@@ -32,6 +32,7 @@ export default function About() {
                 alt={ABOUT_COPY.photo.alt}
                 fill
                 unoptimized
+                loading="lazy"
                 className="object-cover object-top [filter:saturate(0.8)]"
                 sizes="(max-width: 1023px) 80vw, 45vw"
               />

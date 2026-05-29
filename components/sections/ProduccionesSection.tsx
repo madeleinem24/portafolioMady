@@ -14,9 +14,9 @@ import SectionLabel      from '@/components/ui/SectionLabel'
 import { productionVideos } from '@/lib/videos'
 
 const FOTOS = [
-  { src: '/ugc/fotografias/dsc1038.png', alt: 'Fotografía editorial — producción audiovisual' },
-  { src: '/ugc/fotografias/dsc0546.jpg', alt: 'Fotografía de producción — Madeleine Morales' },
-  { src: '/ugc/fotografias/dsc1048.png', alt: 'Fotografía editorial — sesión de producción' },
+  { src: '/ugc/fotografias/dsc1038.webp', alt: 'Fotografía editorial — producción audiovisual' },
+  { src: '/ugc/fotografias/dsc0546.webp', alt: 'Fotografía de producción — Madeleine Morales' },
+  { src: '/ugc/fotografias/dsc1048.webp', alt: 'Fotografía editorial — sesión de producción' },
 ]
 
 export default function ProduccionesSection() {

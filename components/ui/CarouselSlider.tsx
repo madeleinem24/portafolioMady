@@ -166,24 +166,38 @@ export default function CarouselSlider({
         </span>
 
         <div className={trackClasses} style={trackStyle}>
-          {slides.map((slide, i) => (
-            <div
-              key={i}
-              className="cslider__slide"
-              aria-hidden={i !== current}
-              data-active={i === current ? 'true' : undefined}
-            >
-              <Image
-                src={slide.src}
-                alt={slide.alt || `Slide ${i + 1} de ${total}`}
-                fill
-                unoptimized
-                draggable={false}
-                className="cslider__img"
-                sizes="(max-width: 767px) 100vw, (max-width: 1279px) 50vw, 33vw"
-              />
-            </div>
-          ))}
+          {slides.map((slide, i) => {
+            const isActive = i === current
+            const isAdjacent =
+              Math.abs(i - current) === 1 ||
+              (current === 0 && i === total - 1) ||
+              (current === total - 1 && i === 0)
+            const shouldLoadImage = isActive || isAdjacent
+
+            return (
+              <div
+                key={i}
+                className="cslider__slide"
+                aria-hidden={!isActive}
+                data-active={isActive ? 'true' : undefined}
+              >
+                {shouldLoadImage ? (
+                  <Image
+                    src={slide.src}
+                    alt={slide.alt || `Slide ${i + 1} de ${total}`}
+                    fill
+                    unoptimized
+                    draggable={false}
+                    loading={isActive ? 'eager' : 'lazy'}
+                    className="cslider__img"
+                    sizes="(max-width: 767px) 100vw, (max-width: 1279px) 50vw, 33vw"
+                  />
+                ) : (
+                  <div className="cslider__img cslider__img--placeholder" aria-hidden="true" />
+                )}
+              </div>
+            )
+          })}
         </div>
 
         {/* Prev / Next */}

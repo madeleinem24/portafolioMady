@@ -4,7 +4,7 @@ import Image from 'next/image'
 import { useCallback, useEffect, useRef, useState } from 'react'
 
 const HERO_PORTRAIT = {
-  src: '/images/hero-portrait.JPG',
+  src: '/images/hero-portrait.webp',
   alt: 'Madeleine Morales',
   width: 420,
   height: 630,

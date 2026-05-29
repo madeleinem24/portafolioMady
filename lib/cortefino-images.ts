@@ -62,10 +62,10 @@ export const cortefinoCarousels: CortefinoCarouselData[] = [
     gridSpan:    'medium',
     tags:        ['#elmejorcorte'],
     slides: [
-      slide('c1', 'portada.png', 1, 'Cortefino serie 01 — portada'),
-      slide('c1', 'slide2.png',  2, 'Cortefino serie 01 — slide 2'),
-      slide('c1', 'slide3.png',  3, 'Cortefino serie 01 — slide 3'),
-      slide('c1', 'slide4.png',  4, 'Cortefino serie 01 — slide 4'),
+      slide('c1', 'portada.webp', 1, 'Cortefino serie 01 — portada'),
+      slide('c1', 'slide2.webp',  2, 'Cortefino serie 01 — slide 2'),
+      slide('c1', 'slide3.webp',  3, 'Cortefino serie 01 — slide 3'),
+      slide('c1', 'slide4.webp',  4, 'Cortefino serie 01 — slide 4'),
     ],
   },
   {
@@ -81,12 +81,12 @@ export const cortefinoCarousels: CortefinoCarouselData[] = [
     gridSpan:    'medium',
     tags:        [],
     slides: [
-      slide('c2', 'portada.png', 1, 'Cortefino serie 02 — portada'),
-      slide('c2', 'slide2.png',  2, 'Cortefino serie 02 — slide 2'),
-      slide('c2', 'slide3.png',  3, 'Cortefino serie 02 — slide 3'),
-      slide('c2', 'slide4.png',  4, 'Cortefino serie 02 — slide 4'),
-      slide('c2', 'slide5.png',  5, 'Cortefino serie 02 — slide 5'),
-      slide('c2', 'slide6.png',  6, 'Cortefino serie 02 — slide 6'),
+      slide('c2', 'portada.webp', 1, 'Cortefino serie 02 — portada'),
+      slide('c2', 'slide2.webp',  2, 'Cortefino serie 02 — slide 2'),
+      slide('c2', 'slide3.webp',  3, 'Cortefino serie 02 — slide 3'),
+      slide('c2', 'slide4.webp',  4, 'Cortefino serie 02 — slide 4'),
+      slide('c2', 'slide5.webp',  5, 'Cortefino serie 02 — slide 5'),
+      slide('c2', 'slide6.webp',  6, 'Cortefino serie 02 — slide 6'),
     ],
   },
   {
@@ -102,10 +102,10 @@ export const cortefinoCarousels: CortefinoCarouselData[] = [
     gridSpan:    'medium',
     tags:        [],
     slides: [
-      slide('c3', 'portada.png', 1, 'Cortefino serie 03 — portada'),
-      slide('c3', 'slide2.png',  2, 'Cortefino serie 03 — slide 2'),
-      slide('c3', 'slide3.png',  3, 'Cortefino serie 03 — slide 3'),
-      slide('c3', 'slide4.png',  4, 'Cortefino serie 03 — slide 4'),
+      slide('c3', 'portada.webp', 1, 'Cortefino serie 03 — portada'),
+      slide('c3', 'slide2.webp',  2, 'Cortefino serie 03 — slide 2'),
+      slide('c3', 'slide3.webp',  3, 'Cortefino serie 03 — slide 3'),
+      slide('c3', 'slide4.webp',  4, 'Cortefino serie 03 — slide 4'),
     ],
   },
 ]
@@ -152,7 +152,7 @@ export const cortefinoStatics: CortefinoStaticData[] = [
     id:          'cf-estatico-01',
     slug:        'estatico-01',
     folder:      'estaticos',
-    file:        'estatico-1.png',
+    file:        'estatico-1.webp',
     title:       'Publicación 01',
     alt:         'Pieza estática Cortefino — composición 1',
     description: '',
@@ -164,7 +164,7 @@ export const cortefinoStatics: CortefinoStaticData[] = [
     id:          'cf-estatico-02',
     slug:        'estatico-02',
     folder:      'estaticos',
-    file:        'estatico-2.png',
+    file:        'estatico-2.webp',
     title:       'Publicación 02',
     alt:         'Pieza estática Cortefino — composición 2',
     description: '',
@@ -178,7 +178,7 @@ export const cortefinoStatics: CortefinoStaticData[] = [
 
 export function getCortefinoCarouselCoverSrc(carousel: CortefinoCarouselData): string {
   const cover = carousel.slides.find((s) => s.order === 1)
-  return cortefinoImagePath(carousel.folder, cover?.file ?? 'portada.png')
+  return cortefinoImagePath(carousel.folder, cover?.file ?? 'portada.webp')
 }
 
 export function getCortefinoSlideSrc(

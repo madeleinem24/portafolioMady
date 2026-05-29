@@ -1055,6 +1055,7 @@ body {
 
 /* Preview lateral — marco 9:16 editorial (sin chrome TikTok) */
 .ugc-slide-preview {
+  position: relative;
   width: 100%;
   aspect-ratio: 9 / 16;
   margin-inline: auto;
@@ -4119,6 +4120,10 @@ body {
   height: 100%;
   display: block;
   background: oklch(0.148 0.069 328 / 0.92);
+}
+
+.cslider__img--placeholder {
+  pointer-events: none;
 }
 
 /* Flechas prev/next — mínimas, editoriales, aparecen al hover.

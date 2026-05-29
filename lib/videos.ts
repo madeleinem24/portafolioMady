@@ -149,6 +149,21 @@ export const animationVideos: AnimationVideoData[] = [
 
 export const ugcVideos: UgcVideoData[] = [
   {
+    id:            'ugc-cortefino-vino',
+    slug:          'cortefino-vino-cortes',
+    title:         'Cortefino — Vino y cortes',
+    client:        'Cortefino',
+    tiktokUrl:     'https://www.instagram.com/p/DYVCxxlRe8d',
+    publicId:      'Vino_cortes_720p_svkywb',
+    version:       1779994740,
+    cloudinaryUrl: 'https://res.cloudinary.com/dlgsegjay/video/upload/v1779994740/Vino_cortes_720p_svkywb.mp4',
+    preview:       { start: 10, duration: 8 },
+    videoAlt:      'Reel UGC Cortefino: maridaje de vino y cortes de carne',
+    likeCount:     '',
+    commentCount:  '',
+    postedAgo:     '6d ago',
+  },
+  {
     id:            'ugc-cortefino-mitos-vacio',
     slug:          'cortefino-mitos-vacio',
     title:         'Cortefino — Mitos y verdades del vacío',
@@ -207,22 +222,7 @@ export const ugcVideos: UgcVideoData[] = [
     likeCount:     '',
     commentCount:  '',
     postedAgo:     '4d ago',
-  },
-  {
-    id:            'ugc-cortefino-vino',
-    slug:          'cortefino-vino-cortes',
-    title:         'Cortefino — Vino y cortes',
-    client:        'Cortefino',
-    tiktokUrl:     'https://www.instagram.com/p/DYVCxxlRe8d',
-    publicId:      'Vino_cortes_720p_svkywb',
-    version:       1779994740,
-    cloudinaryUrl: 'https://res.cloudinary.com/dlgsegjay/video/upload/v1779994740/Vino_cortes_720p_svkywb.mp4',
-    preview:       { start: 10, duration: 8 },
-    videoAlt:      'Reel UGC Cortefino: maridaje de vino y cortes de carne',
-    likeCount:     '',
-    commentCount:  '',
-    postedAgo:     '6d ago',
-  },
+  }
 ]
 
 // ── Helpers ─────────────────────────────────────────────────────────────────

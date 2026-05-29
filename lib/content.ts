@@ -75,7 +75,7 @@ export const ABOUT_COPY: AboutCopy = {
     },
   ],
   photo: {
-    src: '/images/about-me.JPG',
+    src: '/images/about-me.webp',
     alt: 'Madeleine Morales, diseñadora gráfica, Guayaquil',
   },
   softwareTags: [

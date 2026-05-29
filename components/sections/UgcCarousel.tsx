@@ -241,7 +241,8 @@ export default function UgcCarousel() {
                       <UgcSlidePreview
                         key={`prev-${prevIndex}`}
                         previewUrl={prevPreviewUrl}
-                        shouldPlay={shouldPlay}
+                        posterUrl={prevVideo ? getUgcVideoPosterUrl(prevVideo) : undefined}
+                        shouldPlay={false}
                       />
                     </button>
                   </div>
@@ -277,7 +278,8 @@ export default function UgcCarousel() {
                       <UgcSlidePreview
                         key={`next-${nextIndex}`}
                         previewUrl={nextPreviewUrl}
-                        shouldPlay={shouldPlay}
+                        posterUrl={nextVideo ? getUgcVideoPosterUrl(nextVideo) : undefined}
+                        shouldPlay={false}
                       />
                     </button>
                   </div>
