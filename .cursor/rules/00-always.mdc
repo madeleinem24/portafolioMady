@@ -1,0 +1,77 @@
+---
+description: Brújula del proyecto — stack, protocolo de sesión, anti-slop. Aplica siempre.
+alwaysApply: true
+---
+
+# Portafolio Madeleine Morales — Contexto Global
+
+**Cliente:** Madeleine Morales · Diseñadora Gráfica, UCG  
+**Tono:** Editorial, galería de director de arte. Una galería, no un catálogo.  
+**Métricas:** Lighthouse Perf ≥ 90 · A11y ≥ 95 · FCP < 1.5s · Zero inline styles
+
+## Stack
+
+| Capa | Tech | Notas |
+|------|------|-------|
+| Framework | Next.js 15 App Router | `output: 'export'` — SSG |
+| Lenguaje | TypeScript strict | nunca `any` |
+| Estilos | Tailwind CSS v4 | tokens OKLCH en `@theme` de `globals.css` |
+| Fuentes | `next/font/local` | Unbounded · Instrument Serif · Space Mono |
+| Imágenes | `next/image` + `unoptimized` | URL directa, sin Cloudinary |
+| Video | Cloudinary | solo videos de proceso (ver skill cloudinary) |
+| Deploy | GitHub Pages | SSG estático, rama `gh-pages` |
+| Package | pnpm | nunca npm/yarn |
+| Animaciones | CSS `@keyframes` | sin Framer Motion |
+
+## Protocolo de sesión — OBLIGATORIO antes de cualquier UI
+
+1. Abrir `design-system/MASTER.md` y verificar:
+   - §II colores OKLCH
+   - §III.3 escala tipográfica
+   - §IV espaciado mínimo de sección
+   - §VII anti-patrones
+2. Solo entonces codificar. Si falta un token → documentar brecha en MASTER.md primero.
+
+> Los tools **Impeccable** y **UI UX Pro Max** generaron el `design-system/MASTER.md` de este proyecto.  
+> Al hacer tareas de UI, esos son el contexto canónico, no valores inventados.
+
+## Anti-Slop — Reglas de Oro
+
+```
+✗  style={{ color: '...' }}         → usar clases Tailwind con tokens
+✗  text-[#C084FC]                   → usar text-lavender
+✗  bg-[#190019]                     → usar bg-void
+✗  rounded-xl / rounded-2xl         → usar rounded-[2px] o sin rounded
+✗  shadow-lg / shadow-xl            → CSS custom con oklch tintado
+✗  font-['Inter'] o Poppins/Montserrat → solo fuentes de layout.tsx
+✗  degradado púrpura-azul genérico  → señal de alarma #1
+✗  grid de 3 columnas iguales       → grid asimétrico siempre
+✗  cards con border-radius > 4px   → portafolio editorial, no SaaS
+✗  padding < --space-32 en sección  → mínimo 128px en desktop
+```
+
+La única excepción para `style={}`: valores calculados en JS runtime:
+```tsx
+<div style={{ '--progress': `${pct}%` } as React.CSSProperties} />
+```
+
+## Estado de componentes (referencia rápida)
+
+| Componente | Estado |
+|------------|--------|
+| GrainOverlay · CustomCursor · ScrollProgressBar · Navbar | ✅ |
+| Hero · InfiniteSlider | ✅ |
+| ProjectCard · ProjectGrid | ✅ |
+| About · Services · Contact | ✅ |
+| UgcCarousel · TikTokFrame · UgcSlidePreview | ✅ |
+| VideoPlayer · OutlineText | ⬜ Pendiente |
+
+## Comandos del proyecto
+
+```bash
+pnpm dev          # dev localhost:3000
+pnpm typecheck    # tsc --noEmit (0 errores antes de commit)
+pnpm lint         # ESLint
+pnpm build        # export estático → /out
+pnpm deploy       # build + gh-pages -d out
+```

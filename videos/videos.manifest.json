@@ -1,0 +1,306 @@
+{
+  "videos": [
+    {
+      "key": "cortefino-mitos-vacio",
+      "group": "cortefino-tiktok",
+      "kind": "tiktok",
+      "sourcePath": "ugc_mady/corte fino/contenido de tik tok/_CORREGIDO _MITOS YVERDADES SOBRE EL VACIO.mp4",
+      "id": "ugc-cortefino-mitos-vacio",
+      "slug": "cortefino-mitos-vacio",
+      "title": "Cortefino — Mitos y verdades del vacío",
+      "client": "Cortefino",
+      "tiktokUrl": "",
+      "videoAlt": "",
+      "likeCount": "",
+      "commentCount": "",
+      "postedAgo": "",
+      "preview": { "start": 0, "duration": 5 },
+      "cloudinary": {
+        "publicId": "_CORREGIDO__MITOS_YVERDADES_SOBRE_EL_VACIO_720p_hveum1",
+        "version": 1779994740,
+        "url": "https://res.cloudinary.com/dlgsegjay/video/upload/v1779994740/_CORREGIDO__MITOS_YVERDADES_SOBRE_EL_VACIO_720p_hveum1.mp4"
+      }
+    },
+    {
+      "key": "cortefino-asmr",
+      "group": "cortefino-tiktok",
+      "kind": "tiktok",
+      "sourcePath": "ugc_mady/corte fino/contenido de tik tok/ASMR PREPARACION.mp4",
+      "id": "ugc-cortefino-asmr",
+      "slug": "cortefino-asmr-preparacion",
+      "title": "Cortefino — ASMR preparación",
+      "client": "Cortefino",
+      "tiktokUrl": "",
+      "videoAlt": "",
+      "likeCount": "",
+      "commentCount": "",
+      "postedAgo": "",
+      "preview": { "start": 0, "duration": 5 },
+      "cloudinary": {
+        "publicId": "ASMR_PREPARACION_720p_frshsz",
+        "version": 1779994740,
+        "url": "https://res.cloudinary.com/dlgsegjay/video/upload/v1779994740/ASMR_PREPARACION_720p_frshsz.mp4"
+      }
+    },
+    {
+      "key": "cortefino-recomendaciones",
+      "group": "cortefino-tiktok",
+      "kind": "tiktok",
+      "sourcePath": "ugc_mady/corte fino/contenido de tik tok/recomendaciones_cortes.mp4",
+      "id": "ugc-cortefino-recomendaciones",
+      "slug": "cortefino-recomendaciones-cortes",
+      "title": "Cortefino — Recomendaciones de cortes",
+      "client": "Cortefino",
+      "tiktokUrl": "",
+      "videoAlt": "",
+      "likeCount": "",
+      "commentCount": "",
+      "postedAgo": "",
+      "preview": { "start": 0, "duration": 5 },
+      "cloudinary": {
+        "publicId": "recomendaciones_cortes_720p_dwgf0d",
+        "version": 1779994740,
+        "url": "https://res.cloudinary.com/dlgsegjay/video/upload/v1779994740/recomendaciones_cortes_720p_dwgf0d.mp4"
+      }
+    },
+    {
+      "key": "cortefino-tomahawk",
+      "group": "cortefino-tiktok",
+      "kind": "tiktok",
+      "sourcePath": "ugc_mady/corte fino/contenido de tik tok/tomahawkXribeye(2).mp4",
+      "id": "ugc-cortefino-tomahawk",
+      "slug": "cortefino-tomahawk-ribeye",
+      "title": "Cortefino — Tomahawk x Ribeye",
+      "client": "Cortefino",
+      "tiktokUrl": "",
+      "videoAlt": "",
+      "likeCount": "",
+      "commentCount": "",
+      "postedAgo": "",
+      "preview": { "start": 0, "duration": 5 },
+      "cloudinary": {
+        "publicId": "tomahawkXribeye_2__720p_hjelz9",
+        "version": 1779994740,
+        "url": "https://res.cloudinary.com/dlgsegjay/video/upload/v1779994740/tomahawkXribeye_2__720p_hjelz9.mp4"
+      }
+    },
+    {
+      "key": "cortefino-vino",
+      "group": "cortefino-tiktok",
+      "kind": "tiktok",
+      "sourcePath": "ugc_mady/corte fino/contenido de tik tok/Vino_cortes.mp4",
+      "id": "ugc-cortefino-vino",
+      "slug": "cortefino-vino-cortes",
+      "title": "Cortefino — Vino y cortes",
+      "client": "Cortefino",
+      "tiktokUrl": "",
+      "videoAlt": "",
+      "likeCount": "",
+      "commentCount": "",
+      "postedAgo": "",
+      "preview": { "start": 0, "duration": 5 },
+      "cloudinary": {
+        "publicId": "Vino_cortes_720p_svkywb",
+        "version": 1779994740,
+        "url": "https://res.cloudinary.com/dlgsegjay/video/upload/v1779994740/Vino_cortes_720p_svkywb.mp4"
+      }
+    },
+    {
+      "key": "anim-picana",
+      "group": "cortefino-animaciones",
+      "kind": "animation",
+      "sourcePath": "ugc_mady/corte fino/animaciones/picaña_1.mp4",
+      "id": "anim-cortefino-picana",
+      "slug": "cortefino-picana",
+      "title": "Cortefino — Picaña",
+      "client": "Cortefino",
+      "tiktokUrl": "https://www.instagram.com/p/DUEg57Sj8IY",
+      "videoAlt": "",
+      "likeCount": "",
+      "commentCount": "",
+      "postedAgo": "",
+      "preview": { "start": 0, "duration": 5 },
+      "cloudinary": {
+        "publicId": "picaña_1_g8zafi",
+        "version": 1780005337,
+        "url": "https://res.cloudinary.com/dlgsegjay/video/upload/v1780005337/pica%C3%B1a_1_g8zafi.mp4"
+      }
+    },
+    {
+      "key": "anim-carne-ecua",
+      "group": "cortefino-animaciones",
+      "kind": "animation",
+      "sourcePath": "ugc_mady/corte fino/animaciones/carne_ecua.mp4",
+      "id": "anim-cortefino-carne-ecua",
+      "slug": "cortefino-carne-ecua",
+      "title": "Cortefino — Carne ecuatoriana",
+      "client": "Cortefino",
+      "tiktokUrl": "https://www.instagram.com/p/DUGgaE_gL7g",
+      "videoAlt": "",
+      "likeCount": "",
+      "commentCount": "",
+      "postedAgo": "",
+      "preview": { "start": 0, "duration": 5 },
+      "cloudinary": {
+        "publicId": "carne_ecua_enbbeg",
+        "version": 1780005336,
+        "url": "https://res.cloudinary.com/dlgsegjay/video/upload/v1780005336/carne_ecua_enbbeg.mp4"
+      }
+    },
+    {
+      "key": "anim-feriado",
+      "group": "cortefino-animaciones",
+      "kind": "animation",
+      "sourcePath": "ugc_mady/corte fino/animaciones/ANIMA_FERIADO.mp4",
+      "id": "anim-cortefino-feriado",
+      "slug": "cortefino-anima-feriado",
+      "title": "Cortefino — Animación feriado",
+      "client": "Cortefino",
+      "tiktokUrl": "https://www.instagram.com/p/DU4Y5uADKRK",
+      "videoAlt": "",
+      "likeCount": "",
+      "commentCount": "",
+      "postedAgo": "",
+      "preview": { "start": 0, "duration": 5 },
+      "cloudinary": {
+        "publicId": "ANIMA_FERIADO_ft5gb5",
+        "version": 1780005335,
+        "url": "https://res.cloudinary.com/dlgsegjay/video/upload/v1780005335/ANIMA_FERIADO_ft5gb5.mp4"
+      }
+    },
+    {
+      "key": "anim-corte-fav",
+      "group": "cortefino-animaciones",
+      "kind": "animation",
+      "sourcePath": "ugc_mady/corte fino/animaciones/corte_fav_compos.mp4",
+      "id": "anim-cortefino-corte-fav",
+      "slug": "cortefino-corte-fav-compos",
+      "title": "Cortefino — Corte favorito composición",
+      "client": "Cortefino",
+      "tiktokUrl": "https://www.instagram.com/p/DU_b0B2D_uF",
+      "videoAlt": "",
+      "likeCount": "",
+      "commentCount": "",
+      "postedAgo": "",
+      "preview": { "start": 0, "duration": 5 },
+      "cloudinary": {
+        "publicId": "corte_fav_compos_vh5j64",
+        "version": 1780005336,
+        "url": "https://res.cloudinary.com/dlgsegjay/video/upload/v1780005336/corte_fav_compos_vh5j64.mp4"
+      }
+    },
+    {
+      "key": "anim-semana2",
+      "group": "cortefino-animaciones",
+      "kind": "animation",
+      "sourcePath": "ugc_mady/corte fino/animaciones/Corte_fino_semana2.mp4",
+      "id": "anim-cortefino-semana2",
+      "slug": "cortefino-semana2",
+      "title": "Cortefino — Semana 2",
+      "client": "Cortefino",
+      "tiktokUrl": "https://www.instagram.com/p/DT3tupcD6mB",
+      "videoAlt": "",
+      "likeCount": "",
+      "commentCount": "",
+      "postedAgo": "",
+      "preview": { "start": 0, "duration": 5 },
+      "cloudinary": {
+        "publicId": "Corte_fino_semana2_pvktah",
+        "version": 1780005336,
+        "url": "https://res.cloudinary.com/dlgsegjay/video/upload/v1780005336/Corte_fino_semana2_pvktah.mp4"
+      }
+    },
+    {
+      "key": "prod-escenario-cafe",
+      "group": "mady-producciones",
+      "kind": "production",
+      "preset": "720hd",
+      "sourcePath": "ugc_mady/producciones/Escenario_cafe_miau (1).mp4",
+      "outputPath": "producciones/Escenario_cafe_miau_720p.mp4",
+      "id": "prod-escenario-cafe-miau",
+      "slug": "escenario-cafe-miau",
+      "title": "Escenario Café Miau",
+      "client": "",
+      "tiktokUrl": "",
+      "videoAlt": "",
+      "likeCount": "",
+      "commentCount": "",
+      "postedAgo": "",
+      "preview": { "start": 0, "duration": 5 },
+      "cloudinary": {
+        "publicId": "Escenario_cafe_miau_720p_rhrtat",
+        "version": 1779994756,
+        "url": "https://res.cloudinary.com/dlgsegjay/video/upload/v1779994756/Escenario_cafe_miau_720p_rhrtat.mp4"
+      }
+    },
+    {
+      "key": "prod-examen-virus",
+      "group": "mady-producciones",
+      "kind": "production",
+      "preset": "720hd",
+      "sourcePath": "ugc_mady/producciones/Examen_2_virus_minecraft.mp4",
+      "outputPath": "producciones/Examen_2_virus_minecraft_720p.mp4",
+      "id": "prod-examen-virus-minecraft",
+      "slug": "examen-virus-minecraft",
+      "title": "Examen 2 — Virus Minecraft",
+      "client": "",
+      "tiktokUrl": "",
+      "videoAlt": "",
+      "likeCount": "",
+      "commentCount": "",
+      "postedAgo": "",
+      "preview": { "start": 0, "duration": 5 },
+      "cloudinary": {
+        "publicId": "Examen_2_virus_minecraft_720p_zq5qra",
+        "version": 1779994756,
+        "url": "https://res.cloudinary.com/dlgsegjay/video/upload/v1779994756/Examen_2_virus_minecraft_720p_zq5qra.mp4"
+      }
+    },
+    {
+      "key": "prod-teaser",
+      "group": "mady-producciones",
+      "kind": "production",
+      "preset": "720hd",
+      "sourcePath": "ugc_mady/producciones/Teaser (1).mp4",
+      "outputPath": "producciones/Teaser_720p.mp4",
+      "id": "prod-teaser",
+      "slug": "teaser",
+      "title": "Teaser",
+      "client": "",
+      "tiktokUrl": "",
+      "videoAlt": "",
+      "likeCount": "",
+      "commentCount": "",
+      "postedAgo": "",
+      "preview": { "start": 0, "duration": 5 },
+      "cloudinary": {
+        "publicId": "Teaser_720p_fjqjqn",
+        "version": 1779994756,
+        "url": "https://res.cloudinary.com/dlgsegjay/video/upload/v1779994756/Teaser_720p_fjqjqn.mp4"
+      }
+    },
+    {
+      "key": "prod-trazos-historia",
+      "group": "mady-producciones",
+      "kind": "production",
+      "preset": "720hd-cloud",
+      "sourcePath": "ugc_mady/producciones/Trazos de historia - arte en el corazón de Guayaquil (1).mov",
+      "outputPath": "producciones/Trazos_de_historia_Guayaquil_720p.mp4",
+      "id": "prod-trazos-historia",
+      "slug": "trazos-historia-guayaquil",
+      "title": "Trazos de historia — Guayaquil",
+      "client": "",
+      "tiktokUrl": "",
+      "videoAlt": "",
+      "likeCount": "",
+      "commentCount": "",
+      "postedAgo": "",
+      "preview": { "start": 0, "duration": 5 },
+      "cloudinary": {
+        "publicId": "Trazos_de_historia_Guayaquil_720p_bicqah",
+        "version": 1779994760,
+        "url": "https://res.cloudinary.com/dlgsegjay/video/upload/v1779994760/Trazos_de_historia_Guayaquil_720p_bicqah.mp4"
+      }
+    }
+  ]
+}

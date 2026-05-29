@@ -1,0 +1,113 @@
+---
+description: Tokens de diseño, patrones de componentes y anti-patrones visuales. Activo al editar componentes.
+globs: components/**/*
+alwaysApply: false
+---
+
+# UI — Tokens y Patrones del Proyecto
+
+> Fuente canónica completa: `design-system/MASTER.md`
+
+## Paleta OKLCH (Tailwind tokens)
+
+```
+FONDOS (scale de profundidad):
+  bg-void      oklch(0.148 0.069 328)  #190019  canvas principal
+  bg-abyss     oklch(0.257 0.101 299)  #2B124C  navs, drawers
+  bg-shadow    oklch(0.360 0.092 320)  #522B5B  cards, divisores
+  bg-dusk      oklch(0.499 0.082 347)  #854F6C  hover en fondo oscuro
+  bg-blush     oklch(0.811 0.048 25)   #DFB6B2  texto secundario
+  bg-petal     oklch(0.934 0.030 50)   #FBE4D8  texto principal sobre void
+  bg-canvas    oklch(0.984 0.009 45)   #FFF8F5  secciones claras
+
+ACENTOS (máx. 1 por componente):
+  text-lavender   oklch(0.722 0.177 306)  lavanda  → UI, hovers, focus
+  text-magenta    oklch(0.710 0.246 341)  magenta  → CTAs (1 por sección)
+  text-lime       oklch(0.921 0.214 129)  lima     → marquee, 1 por página
+  text-gold       oklch(0.887 0.180 97)   oro      → badges, premios
+```
+
+## Tipografía
+
+```
+font-display   Unbounded     → h1 hero, marca, números grandes
+font-serif     Instrument Serif (italic) → acentos editoriales
+font-sans / font-mono  Space Mono → body, nav, etiquetas, botones ghost
+```
+
+Escala (clamp fluid):
+- `text-[length:var(--text-hero)]` → h1 hero (52→120px)
+- `text-[length:var(--text-display)]` → titulares de sección
+- `text-[length:var(--text-label)]` → 11px, nav, botones
+- `text-[length:var(--text-micro)]` → 10px, stats label
+
+**Regla:** mínimo 3 pasos de diferencia entre el texto mayor y menor de cada sección.
+
+## Espaciado de secciones
+
+```
+Sección principal   →  py-48  (192px)  --space-48
+Sección secundaria  →  py-32  (128px)  --space-32
+Footer              →  py-24  ( 96px)  --space-24
+Padding horizontal  →  px-16  ( 64px) mobile / px-20 (80px) desktop
+```
+
+Nunca dos secciones consecutivas con el mismo `padding-block` (variación crea tensión editorial).
+
+## Grid de proyectos — Asimétrico obligatorio
+
+```
+12 columnas · gap-6
+Fila 1: col-span-8 + col-span-4   (featured grande + pequeño)
+Fila 2: col-span-5 + col-span-7   (inversión)
+Fila 3: col-span-4 + col-span-4 + col-span-4  (tight)
+```
+
+Nunca grid uniforme de 3 columnas iguales → catálogo, no galería.
+
+## Patrones de componentes
+
+```tsx
+// SectionLabel — pattern de etiqueta de sección
+<SectionLabel index="01" label="WORK" />
+// Renderiza: "/ 01 — WORK" en font-mono + tracking-widest
+
+// ProjectCard — full-bleed con gradient overlay
+// arrow badge esquina · info overlay al hover
+// ratio 4:3 o 3:4 según posición en grid
+
+// Animaciones de entrada — stagger obligatorio
+className="animate-[fadeUp_0.8s_var(--ease-out-expo)_0.4s_both]"
+```
+
+## Efectos activos en el layout
+
+- **Grain overlay** (fijo, z-9990, opacity 0.045) — no duplicar en componentes
+- **Cursor personalizado** (ring lavender + dot magenta) — `cursor-none` en body
+- **Scroll progress bar** (top-0, h-[2px], gradient magenta→lavender→lime)
+
+## Prohibiciones en componentes
+
+```
+✗  rounded-xl / rounded-2xl / rounded-full   → border-radius máx: 2px
+✗  shadow-md / shadow-lg                     → box-shadow con oklch tintado
+✗  border-left como acento decorativo        → Impeccable absolute ban
+✗  background-clip: text + gradient          → Impeccable absolute ban
+✗  cards idénticas contiguas                 → variar tamaño siempre
+✗  más de 2 acentos en un componente         → un acento + neutral
+✗  transition: all                           → especificar propiedades
+✗  scale(1.1) en hover de cards              → máx scale(1.02) o translateY(-4px)
+✗  @media sin prefers-reduced-motion         → accesibilidad no negociable
+```
+
+## Nomenclatura
+
+```
+Componentes    PascalCase    ProjectCard.tsx
+Hooks          use + camelCase   useScrollProgress.ts
+Tipos          PascalCase    ProjectData
+Constantes     SCREAMING_SNAKE   MAX_PROJECTS
+```
+
+Un componente = un archivo. `sections/` → Server Components por defecto.  
+Agregar `'use client'` solo si usa: useState, useEffect, useRef, eventos DOM.

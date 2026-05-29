@@ -1,0 +1,112 @@
+---
+description: Reglas de Next.js SSG, fuentes, imágenes y metadata. Activo al editar app/.
+globs: app/**/*
+alwaysApply: false
+---
+
+# App — Next.js SSG, Fuentes e Imágenes
+
+## Restricciones SSG (`output: 'export'`)
+
+- `images.unoptimized: true` en `next.config.ts` — no hay servidor para optimizar
+- Sin `getServerSideProps`, sin API routes que requieran runtime
+- `trailingSlash: true` + `basePath` (descomentar en producción si el repo no está en raíz)
+- Verificar que `next/image` siempre tenga `unoptimized` prop o que esté en `next.config.ts`
+
+## Fuentes — Solo en `layout.tsx`
+
+```tsx
+// ✅ Solo aquí, nunca en componentes
+import localFont from 'next/font/local'
+
+// Tres familias del sistema — sin agregar otras
+const unbounded    = localFont({ ... variable: '--font-unbounded' })
+const instrumentSerif = localFont({ ... variable: '--font-instrument-serif' })
+const spaceMono    = localFont({ ... variable: '--font-space-mono' })
+
+// Aplicar en <html> con las 3 variables
+<html className={`${unbounded.variable} ${instrumentSerif.variable} ${spaceMono.variable}`}>
+```
+
+**Prohibido** importar fuentes en cualquier otro archivo. Causa duplicación de requests.
+
+## Imágenes — URL directa
+
+```tsx
+import Image from 'next/image'
+
+// ProjectData.imageUrl es URL completa (https://...)
+<Image
+  src={project.imageUrl}
+  alt={project.imageAlt}   // descriptivo, nunca vacío
+  width={800}
+  height={600}
+  unoptimized              // obligatorio en SSG
+  className="w-full h-full object-cover"
+/>
+```
+
+**No** usar Cloudinary para imágenes. Solo para videos de proceso.
+
+## Videos — Cloudinary
+
+```tsx
+// Usar helper y componente del proyecto
+import { cloudinaryVideoUrl } from '@/lib/cloudinary'
+// O componente directo:
+<VideoPlayer publicId="madeleine-portfolio/projects/[slug]/process-video" />
+```
+
+Variable de entorno: `NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME` (no commitear `.env.local`).
+
+## `globals.css` — Bloque `@theme`
+
+El bloque `@theme` es la fuente de tokens para Tailwind v4. Mantener sincronizado con `design-system/MASTER.md §VIII`.
+
+```css
+@theme {
+  --color-void:     oklch(0.148 0.069 328);
+  --color-lavender: oklch(0.722 0.177 306);
+  /* ... resto del MASTER.md §VIII ... */
+  --font-display: 'Unbounded', system-ui, sans-serif;
+  --font-sans:    'Space Mono', ui-monospace, monospace;
+  --font-serif:   'Instrument Serif', Georgia, serif;
+}
+```
+
+**Nunca** hardcodear hex en `globals.css`. Usar OKLCH con los tokens nombrados.
+
+## Metadata (`layout.tsx`)
+
+```tsx
+export const metadata: Metadata = {
+  title: 'Madeleine Morales — Diseñadora Gráfica',
+  description: '...',
+  openGraph: { images: ['/og-image.jpg'] },
+}
+```
+
+## Accesibilidad — Landmark roles obligatorios
+
+Cada sección debe tener el landmark correcto:
+```tsx
+<main>         // page.tsx — envuelve todo
+<nav>          // Navbar
+<section>      // Hero, Work, About, Services, Contact
+<footer>       // Footer
+```
+
+`aria-hidden="true"` en todos los elementos puramente decorativos (grain, orbs, cursor).
+
+## Checklist antes de commit
+
+```
+□ pnpm typecheck → 0 errores
+□ pnpm lint      → 0 warnings
+□ pnpm build     → sin errores
+□ grep "style="  → solo excepciones JS runtime documentadas
+□ grep "#[0-9A-Fa-f]" components/ → 0 hex hardcodeados
+□ Fuentes solo en layout.tsx
+□ Todos los <Image> con alt descriptivo
+□ Landmarks en todas las secciones
+```
