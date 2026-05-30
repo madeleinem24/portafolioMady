@@ -33,7 +33,7 @@ export const HERO_COPY: HeroCopy = {
     ghost:   { label: 'Trabajemos juntos', href: '#contact' },
   },
   stats: [
-    { value: '5', suffix: '+', label: 'Marcas' },
+    //{ value: '5', suffix: '+', label: 'Marcas' },
     { value: '2',  suffix: '+', label: 'Años exp.' },
   ],
   scrollLabel: 'Scroll',

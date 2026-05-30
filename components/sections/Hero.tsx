@@ -63,11 +63,12 @@ export default function Hero() {
         >
           <span className="sr-only">Madeleine Morales</span>
           <span aria-hidden="true">
-            {HERO_COPY.namePrefix}
-            <br />
-            <span className="hero-name-accent">
-              {HERO_COPY.nameOutline}
-              {HERO_COPY.nameSerif}
+            <span className="hero-name-line-first">
+              {HERO_COPY.namePrefix}
+              <span className="hero-name-accent">
+                {HERO_COPY.nameOutline}
+                {HERO_COPY.nameSerif}
+              </span>
             </span>
             <br />
             {HERO_COPY.nameSuffix}
