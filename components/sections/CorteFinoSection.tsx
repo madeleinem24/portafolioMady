@@ -6,7 +6,7 @@
 // Layout:
 //   Header
 //   Row 1: 3 carruseles interactivos uniformes con drag tipo IG
-//   Row 2: IG strip — 5 animaciones en fila única (autoplay en viewport)
+//   Row 2: IG strip — 5 animaciones, tira horizontal con scroll (como prod-personal)
 //   Row 3: 2 piezas estáticas (1fr + 1fr, altura acotada)
 // ─────────────────────────────────────────────────────────────────────────────
 
@@ -23,10 +23,21 @@ import {
   cortefinoStatics,
   getCortefinoStaticSrc,
 } from '@/lib/cortefino-images'
+import { useHorizontalScrollTrack } from '@/lib/useHorizontalScrollTrack'
 import { animationVideos, CORTEFINO_IG_PROFILE } from '@/lib/videos'
 
 export default function CorteFinoSection() {
   const sectionRef = useRef<HTMLElement>(null)
+  const animTrackRef = useRef<HTMLDivElement>(null)
+
+  const { handleKeyDown: handleAnimTrackKeyDown } = useHorizontalScrollTrack(
+    animTrackRef,
+    {
+      scrollableClass: 'cf2-ig-row--scrollable',
+      draggingClass:   'cf2-ig-row--dragging',
+      slideSelector:   '.cf2-ig-frame',
+    },
+  )
 
   useEffect(() => {
     const section = sectionRef.current
@@ -99,7 +110,7 @@ export default function CorteFinoSection() {
           ))}
         </div>
 
-        {/* ── Row 2: IG strip — 5 animaciones en fila única ───────────────── */}
+        {/* ── Row 2: IG strip — 5 animaciones, scroll horizontal ──────────── */}
         <div className="cf2-ig-strip">
           <div className="cf2-ig-strip__head">
             <p className="cf2-ig-strip__label" aria-hidden="true">
@@ -115,12 +126,18 @@ export default function CorteFinoSection() {
               {CORTEFINO_COPY.igStrip.handle}
             </a>
           </div>
+          <p className="cf2-ig-strip__scroll-hint" aria-hidden="true">
+            {CORTEFINO_COPY.igStrip.scrollHint}
+          </p>
           <div
+            ref={animTrackRef}
             className="cf2-ig-row"
             aria-label={CORTEFINO_COPY.igStrip.animationsAriaLabel}
+            tabIndex={0}
+            onKeyDown={handleAnimTrackKeyDown}
           >
-            {animationVideos.map((anim, i) => (
-              <div key={anim.id} className="bento-cell" data-col={String(i + 3)}>
+            {animationVideos.map((anim) => (
+              <div key={anim.id} className="cf2-ig-frame">
                 <AnimationCell video={anim} autoplay />
               </div>
             ))}

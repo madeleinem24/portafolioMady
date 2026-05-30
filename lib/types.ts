@@ -67,10 +67,8 @@ export interface HeroCta {
 
 export interface HeroCopy {
   tag:              string
-  namePrefix:       string
-  nameOutline:      string
-  nameSerif:        string
-  nameSuffix:       string
+  nameMain:         string
+  nameAccent:       string
   descriptionLine1: string
   descriptionLine2: string
   cta: {
@@ -313,6 +311,7 @@ export interface CortefinoSectionCopy {
     handle:             string
     profileAriaLabel:   string
     animationsAriaLabel:string
+    scrollHint:         string
   }
 }
 

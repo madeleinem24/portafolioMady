@@ -22,10 +22,8 @@ import type {
 
 export const HERO_COPY: HeroCopy = {
   tag:              'Diseñadora Gráfica & Creadora UGC',
-  namePrefix:       'Made',
-  nameOutline:      'lein',
-  nameSerif:        'e',
-  nameSuffix:       'Morales',
+  nameMain:         'Madeleine',
+  nameAccent:       'morales',
   descriptionLine1: 'Multimedia · Diseño · Producción Audiovisual · Contenido UGC.',
   descriptionLine2: 'Creatividad con propósito, diseño con alma.',
   cta: {
@@ -69,7 +67,7 @@ export const ABOUT_COPY: AboutCopy = {
     {
       id:    'instagram',
       label: 'Instagram',
-      href:  'https://www.instagram.com/p/DUEg57Sj8IY',
+      href:  'https://www.instagram.com/madimorales97',
     },
     {
       id:    'linkedin',
@@ -218,6 +216,7 @@ export const CORTEFINO_COPY: CortefinoSectionCopy = {
     handle:              '@cortefino.ec',
     profileAriaLabel:    'Ver perfil de Cortefino en Instagram',
     animationsAriaLabel: 'Animaciones de marca para Instagram — Cortefino',
+    scrollHint:          'Desliza para ver las 5 piezas',
   },
 }
 

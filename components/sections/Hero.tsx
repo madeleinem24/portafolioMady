@@ -58,20 +58,13 @@ export default function Hero() {
         </p>
 
         <h1
-          className="type-hero hero-enter-title hero-title"
+          className="hero-heading hero-enter-title hero-title"
           aria-label="Madeleine Morales"
         >
           <span className="sr-only">Madeleine Morales</span>
           <span aria-hidden="true">
-            <span className="hero-name-line-first">
-              {HERO_COPY.namePrefix}
-              <span className="hero-name-accent">
-                {HERO_COPY.nameOutline}
-                {HERO_COPY.nameSerif}
-              </span>
-            </span>
-            <br />
-            {HERO_COPY.nameSuffix}
+            <span>{HERO_COPY.nameMain}</span>
+            <em className="hero-heading-accent">{HERO_COPY.nameAccent}</em>
           </span>
         </h1>
       </div>

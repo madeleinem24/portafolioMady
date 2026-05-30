@@ -495,18 +495,27 @@ body {
   text-shadow: 0 1px 2rem color-mix(in oklch, var(--color-void) 75%, transparent);
 }
 
-/* Primera línea del H1 — «Made» + «leine» siempre juntos */
-.hero-name-line-first {
-  display: inline-block;
-  white-space: nowrap;
+/* Titular — paridad .contact-heading (Unbounded 900 + acento serif en bloque) */
+.hero-heading {
+  width: 100%;
+  max-width: 100%;
+  font-family: var(--font-display);
+  font-size: var(--text-hero);
+  font-weight: 900;
+  line-height: 0.92;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+  color: var(--color-canvas);
 }
 
-/* Acento serif — paridad About «corazón.» (Instrument Serif · lavender · normal-case) */
-.hero-name-accent {
+.hero-heading-accent {
+  display: block;
+  margin-top: 0.12em;
   font-family: var(--font-serif);
+  font-size: 0.55em;
   font-style: italic;
   font-weight: 400;
-  font-size: 1.1em;
+  line-height: 1.05;
   letter-spacing: -0.02em;
   text-transform: none;
   color: var(--color-lavender);
@@ -794,7 +803,7 @@ body {
     text-shadow: none;
   }
 
-  .type-hero {
+  .hero-heading {
     font-size: var(--text-hero-mobile);
     line-height: 0.92;
   }
@@ -3507,6 +3516,21 @@ body {
 /* ── Fila 3: IG strip — fila única de 5 animaciones ──────────────────────── */
 .cf2-ig-strip {
   margin-top: var(--spacing-5);
+  position: relative;
+  /* Ancho fijo por slide — nunca repartir 100%/5 (recorta sin scroll claro) */
+  --cf2-ig-slide-w: 11.25rem;
+}
+
+@media (min-width: 768px) {
+  .cf2-ig-strip {
+    --cf2-ig-slide-w: 12rem;
+  }
+}
+
+@media (min-width: 1200px) {
+  .cf2-ig-strip {
+    --cf2-ig-slide-w: 12.5rem;
+  }
 }
 
 .cf2-ig-strip__head {
@@ -3544,11 +3568,87 @@ body {
   outline-offset: 3px;
 }
 
-/* 5 celdas en fila única — equal width */
+.cf2-ig-strip__scroll-hint {
+  display: none;
+  margin: 0 0 var(--spacing-2);
+  font-family: var(--font-mono);
+  font-size: var(--text-nano);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: oklch(0.934 0.030 50 / 0.35);
+}
+
+.cf2-ig-strip:has(.cf2-ig-row--scrollable) .cf2-ig-strip__scroll-hint {
+  display: block;
+}
+
+/* Tira horizontal — 5 slides, scroll + snap (paridad prod-personal) */
 .cf2-ig-row {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: stretch;
   gap: var(--spacing-3);
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-behavior: smooth;
+  scroll-snap-type: x proximity;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding-block-end: var(--spacing-2);
+  scroll-padding-inline: 0 var(--spacing-4);
+}
+
+.cf2-ig-row::-webkit-scrollbar {
+  display: none;
+}
+
+.cf2-ig-row:focus-visible {
+  outline: 2px solid var(--color-lavender);
+  outline-offset: 4px;
+}
+
+.cf2-ig-row--scrollable {
+  cursor: grab;
+  /* Asoma el siguiente slide para indicar que hay más */
+  padding-inline-end: calc(var(--cf2-ig-slide-w) * 0.28);
+}
+
+.cf2-ig-row--scrollable.cf2-ig-row--dragging {
+  cursor: grabbing;
+  scroll-snap-type: none;
+}
+
+/* Degradado en el borde derecho cuando hay overflow */
+.cf2-ig-strip:has(.cf2-ig-row--scrollable)::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: min(5rem, 18vw);
+  height: calc(var(--cf2-ig-slide-w) + var(--spacing-2));
+  pointer-events: none;
+  background: linear-gradient(
+    to left,
+    var(--color-void) 0%,
+    oklch(0.148 0.069 328 / 0.72) 45%,
+    transparent 100%
+  );
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cf2-ig-row {
+    scroll-behavior: auto;
+    scroll-snap-type: none;
+  }
+}
+
+.cf2-ig-frame {
+  position: relative;
+  flex: 0 0 var(--cf2-ig-slide-w);
+  width: var(--cf2-ig-slide-w);
+  scroll-snap-align: start;
+  scroll-snap-stop: normal;
 }
 
 /* ── Viewport grab cursor ────────────────────────────────────────────────── */
@@ -3584,14 +3684,6 @@ body {
   .cf2-row--carousels {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
-
-  .cf2-ig-row {
-    grid-template-columns: repeat(4, 1fr);
-  }
-
-  .cf2-ig-row > :last-child {
-    display: none;
-  }
 }
 
 @media (max-width: 767px) {
@@ -3601,24 +3693,6 @@ body {
 
   .cf2-row--statics {
     grid-template-columns: 1fr;
-  }
-
-  .cf2-ig-row {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  .cf2-ig-row > :nth-child(n+4) {
-    display: none;
-  }
-}
-
-@media (max-width: 479px) {
-  .cf2-ig-row {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .cf2-ig-row > :nth-child(n+3) {
-    display: none;
   }
 }
 
