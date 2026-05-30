@@ -38,7 +38,7 @@ export default function Contact() {
         <div className="contact-top contact-enter-top">
 
           <div className="contact-head">
-            <SectionLabel index="06" text={CONTACT_COPY.sectionLabel} lineFull />
+            <SectionLabel index={CONTACT_COPY.sectionIndex} text={CONTACT_COPY.sectionLabel} lineFull />
 
             <h2 id="contact-heading" className="contact-heading">
               <span className="contact-glitch">{CONTACT_COPY.headingGlitch}</span>
@@ -50,7 +50,7 @@ export default function Contact() {
             </p>
 
             <div className="contact-email-badge-wrap">
-              <span className="contact-email-badge-label">Email</span>
+              <span className="contact-email-badge-label">{CONTACT_COPY.labels.email}</span>
               <a href={`mailto:${CONTACT_COPY.email}`} className="contact-email-badge">
                 <MailIcon />
                 {CONTACT_COPY.email}
@@ -58,7 +58,7 @@ export default function Contact() {
             </div>
 
             <div className="contact-social-wrap">
-              <p className="type-nano text-petal/45">Redes</p>
+              <p className="type-nano text-petal/45">{CONTACT_COPY.labels.social}</p>
               <div className="contact-social-list">
                 {ABOUT_COPY.socialLinks.map((social) => (
                   <a
@@ -119,7 +119,7 @@ export default function Contact() {
             {CONTACT_COPY.footer.tagline}
           </span>
           <span className="type-nano tracking-[0.15em] text-petal/25 md:text-right">
-            Hecho con{' '}
+            {CONTACT_COPY.labels.madeWith}{' '}
             <span className="text-magenta" aria-hidden="true">
               ♥
             </span>

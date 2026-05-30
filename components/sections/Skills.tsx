@@ -7,6 +7,7 @@
 import { useRef } from 'react'
 
 import SectionLabel from '@/components/ui/SectionLabel'
+import { SKILLS_COPY } from '@/lib/content'
 import { DISCIPLINE_SKILLS, SOFTWARE_SKILLS } from '@/lib/skills'
 import type { SkillChipData } from '@/lib/types'
 
@@ -69,7 +70,12 @@ export default function Skills() {
     >
       <div className="container-editorial">
         <div className="skills-head skills-enter-head">
-          <SectionLabel index="04" text="Herramientas" lineFull className="mb-4" />
+          <SectionLabel
+            index={SKILLS_COPY.sectionIndex}
+            text={SKILLS_COPY.sectionLabel}
+            lineFull
+            className="mb-4"
+          />
 
           <h2
             id="skills-heading"
@@ -79,7 +85,7 @@ export default function Skills() {
               'leading-[0.9] tracking-[-0.035em] uppercase',
             ].join(' ')}
           >
-            Mi{' '}
+            {SKILLS_COPY.headingPrefix}
             <em
               className={[
                 'font-serif italic font-normal',
@@ -87,24 +93,24 @@ export default function Skills() {
                 'text-[1.05em] tracking-[-0.02em]',
               ].join(' ')}
             >
-              arsenal
+              {SKILLS_COPY.headingAccent}
             </em>
             <br />
-            creativo.
+            {SKILLS_COPY.headingLine2}
           </h2>
         </div>
       </div>
 
       <SkillsTrack
         items={SOFTWARE_SKILLS}
-        ariaLabel="Software de diseño"
+        ariaLabel={SKILLS_COPY.tracks.software}
         className="mt-10 md:mt-12"
       />
 
       <SkillsTrack
         items={DISCIPLINE_SKILLS}
         reverse
-        ariaLabel="Disciplinas creativas"
+        ariaLabel={SKILLS_COPY.tracks.disciplines}
         className="skills-track-outer--disciplines"
       />
     </section>

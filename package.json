@@ -14,7 +14,8 @@
     "analyze":   "ANALYZE=true next build",
     "deploy":          "pnpm build && gh-pages -d out",
     "compress-video":  "python videos/conversor_videos.py",
-    "compress-images": "python scripts/compress-public-images.py"
+    "compress-images": "python scripts/compress-public-images.py",
+    "compress-fotos":  "python scripts/compress-ugc-fotos.py"
   },
   "dependencies": {
     "next": "^15.3.0",

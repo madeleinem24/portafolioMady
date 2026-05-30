@@ -35,7 +35,7 @@ export default function HeroPhoto() {
       alt={HERO_PORTRAIT.alt}
       width={HERO_PORTRAIT.width}
       height={HERO_PORTRAIT.height}
-      sizes="(max-width: 1023px) 88vw, 38vw"
+      sizes="(max-width: 1023px) 55vw, 38vw"
       priority
       unoptimized
       className={loaded ? 'hero-photo loaded' : 'hero-photo'}

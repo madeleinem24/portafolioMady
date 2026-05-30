@@ -7,42 +7,46 @@
 import LinkedInAchievementCard from '@/components/ui/LinkedInAchievementCard'
 import SectionLabel            from '@/components/ui/SectionLabel'
 import UgcKeyVisualCell        from '@/components/ui/UgcKeyVisualCell'
-import { assetPath }           from '@/lib/asset-path'
-
-const MERCH = [
-  { src: assetPath('/ugc/tonimix/merch/gorra.webp'),    alt: 'Gorra Tonimix — diseño retrodigital',   title: 'Gorra' },
-  { src: assetPath('/ugc/tonimix/merch/hoodie.webp'),   alt: 'Hoodie Chill Tonimix',                   title: 'Hoodie' },
-  { src: assetPath('/ugc/tonimix/merch/tote-bag.webp'), alt: 'Tote bag Tonimix',                        title: 'Tote bag' },
-  { src: assetPath('/ugc/tonimix/merch/camiseta.webp'), alt: 'Camiseta ToniChill Tonimix',              title: 'Camiseta' },
-]
+import { TONIMIX_COPY }        from '@/lib/content'
+import {
+  TONIMIX_KEY_VISUALS,
+  TONIMIX_MERCH,
+  TONIMIX_MERCH_CATEGORY,
+} from '@/lib/tonimix'
 
 export default function TonimixSection() {
+  const { primary, mupi, secondary } = TONIMIX_KEY_VISUALS
+
   return (
     <section
       id="tonimix"
       className="section-pad-client"
-      aria-label="Cliente: Tonimix — identidad de marca"
+      aria-label={TONIMIX_COPY.ariaLabel}
     >
       <div className="container-editorial">
 
         {/* ── Header ──────────────────────────────────────────────────────── */}
         <header className="client-header">
-          <SectionLabel index="06" text="Tonimix" lineFull className="mb-4" />
+          <SectionLabel
+            index={TONIMIX_COPY.sectionIndex}
+            text={TONIMIX_COPY.sectionLabel}
+            lineFull
+            className="mb-4"
+          />
           <h2
             className={[
               'font-display font-black text-petal uppercase',
               'text-[clamp(2.25rem,5vw,4.5rem)] leading-[0.9] tracking-[-0.035em]',
             ].join(' ')}
           >
-            Identidad
+            {TONIMIX_COPY.headingMain}
             <br />
             <em className="font-serif italic font-normal normal-case text-gold text-[1.05em] tracking-[-0.02em]">
-              de marca.
+              {TONIMIX_COPY.headingAccent}
             </em>
           </h2>
           <p className="mt-6 text-sm font-mono text-petal/50 max-w-[46ch] leading-relaxed">
-            Dirección de arte, key visuals, MUPI y merchandising para Tonimix.
-            Campaña retrodigital reconocida en la escena creativa ecuatoriana.
+            {TONIMIX_COPY.intro}
           </p>
         </header>
 
@@ -52,26 +56,10 @@ export default function TonimixSection() {
           {/* ═══ FILA 1: KV1 grande + MUPI retrato ═══════════════════════ */}
           <div className="toni-row toni-row--hero">
             <div className="toni-kv toni-kv--primary">
-              <UgcKeyVisualCell
-                src={assetPath('/ugc/tonimix/key-visual-1.webp')}
-                alt="Key Visual Tonimix — campaña RetroDigital Ecuador, dirección de arte"
-                client="Tonimix"
-                title="Key Visual 01"
-                category="Key Visual"
-                imgWidth={1200}
-                imgHeight={800}
-              />
+              <UgcKeyVisualCell {...primary} />
             </div>
             <div className="toni-mupi">
-              <UgcKeyVisualCell
-                src={assetPath('/ugc/tonimix/mupi.webp')}
-                alt="MUPI publicitario Tonimix — vía pública Guayaquil"
-                client="Tonimix"
-                title="MUPI"
-                category="MUPI"
-                imgWidth={600}
-                imgHeight={900}
-              />
+              <UgcKeyVisualCell {...mupi} />
             </div>
           </div>
 
@@ -79,29 +67,23 @@ export default function TonimixSection() {
           <div className="toni-row toni-row--mid">
             <LinkedInAchievementCard />
             <div className="toni-kv toni-kv--secondary">
-              <UgcKeyVisualCell
-                src={assetPath('/ugc/tonimix/key-visual-2.webp')}
-                alt="Key Visual Tonimix 2 — composición editorial productos fondo azul"
-                client="Tonimix"
-                title="Key Visual 02"
-                category="Key Visual"
-                imgWidth={1000}
-                imgHeight={700}
-              />
+              <UgcKeyVisualCell {...secondary} />
             </div>
           </div>
 
           {/* ═══ FILA 3: Merchandising ════════════════════════════════════ */}
-          <div className="toni-merch-strip" aria-label="Línea de merchandising Tonimix">
-            <p className="toni-merch-label" aria-hidden="true">Merchandising</p>
+          <div className="toni-merch-strip" aria-label={TONIMIX_COPY.merchAriaLabel}>
+            <p className="toni-merch-label" aria-hidden="true">
+              {TONIMIX_COPY.merchLabel}
+            </p>
             <div className="toni-merch-grid">
-              {MERCH.map((item) => (
+              {TONIMIX_MERCH.map((item) => (
                 <div key={item.src} className="toni-merch-item">
                   <UgcKeyVisualCell
                     src={item.src}
                     alt={item.alt}
                     title={item.title}
-                    category="Merch"
+                    category={TONIMIX_MERCH_CATEGORY}
                     objectFit="contain"
                     imgWidth={400}
                     imgHeight={400}

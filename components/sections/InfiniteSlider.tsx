@@ -9,7 +9,7 @@
 
 import { useRef } from 'react'
 
-import { SLIDER_ITEMS } from '@/lib/content'
+import { SLIDER_ARIA_LABEL, SLIDER_ITEMS } from '@/lib/content'
 
 const TRACK = [...SLIDER_ITEMS, ...SLIDER_ITEMS]
 
@@ -23,7 +23,7 @@ export default function InfiniteSlider() {
     <div
       className="marquee-strip overflow-hidden bg-lime section-marquee"
       role="region"
-      aria-label="Disciplinas de diseño"
+      aria-label={SLIDER_ARIA_LABEL}
       tabIndex={0}
       onMouseEnter={pause}
       onMouseLeave={resume}

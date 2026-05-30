@@ -48,6 +48,8 @@ alwaysApply: true
 ✗  grid de 3 columnas iguales       → grid asimétrico siempre
 ✗  cards con border-radius > 4px   → portafolio editorial, no SaaS
 ✗  padding < --space-32 en sección  → mínimo 128px en desktop
+✗  tipografía responsive solo en H1  → TODOS los niveles del bloque deben escalar (tag, body, CTA, stats, scroll)
+✗  text-micro / text-label fijos en layouts fluidos → usar tokens `--text-*` con `clamp()` en `globals.css`
 ```
 
 La única excepción para `style={}`: valores calculados en JS runtime:

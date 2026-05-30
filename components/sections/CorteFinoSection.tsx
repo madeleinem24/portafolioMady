@@ -12,15 +12,14 @@
 
 import { useEffect, useRef } from 'react'
 
-import AnimationCell   from '@/components/ui/AnimationCell'
-import CarouselSlider  from '@/components/ui/CarouselSlider'
+import AnimationCell    from '@/components/ui/AnimationCell'
+import CarouselSlider   from '@/components/ui/CarouselSlider'
 import UgcKeyVisualCell from '@/components/ui/UgcKeyVisualCell'
-import SectionLabel    from '@/components/ui/SectionLabel'
-
+import SectionLabel     from '@/components/ui/SectionLabel'
+import { CORTEFINO_COPY } from '@/lib/content'
 import {
   cortefinoCarousels,
   cortefinoCarouselSliders,
-  cortefinoSectionCopy,
   cortefinoStatics,
   getCortefinoStaticSrc,
 } from '@/lib/cortefino-images'
@@ -29,7 +28,6 @@ import { animationVideos, CORTEFINO_IG_PROFILE } from '@/lib/videos'
 export default function CorteFinoSection() {
   const sectionRef = useRef<HTMLElement>(null)
 
-  // Stagger reveal en scroll
   useEffect(() => {
     const section = sectionRef.current
     if (!section) return
@@ -56,27 +54,32 @@ export default function CorteFinoSection() {
       ref={sectionRef}
       id="cortefino"
       className="section-pad-client"
-      aria-label="Cliente: Cortefino — diseño gráfico"
+      aria-label={CORTEFINO_COPY.ariaLabel}
     >
       <div className="container-editorial">
 
         {/* ── Header ──────────────────────────────────────────────────────── */}
         <header className="client-header bento-cell" data-col="0">
-          <SectionLabel index="05" text={cortefinoSectionCopy.sectionLabel} lineFull className="mb-4" />
+          <SectionLabel
+            index={CORTEFINO_COPY.sectionIndex}
+            text={CORTEFINO_COPY.sectionLabel}
+            lineFull
+            className="mb-4"
+          />
           <h2
             className={[
               'font-display font-black text-petal uppercase',
               'text-[clamp(2.25rem,5vw,4.5rem)] leading-[0.9] tracking-[-0.035em]',
             ].join(' ')}
           >
-            {cortefinoSectionCopy.headingMain}
+            {CORTEFINO_COPY.headingMain}
             <br />
             <em className="font-serif italic font-normal normal-case text-magenta text-[1.05em] tracking-[-0.02em]">
-              {cortefinoSectionCopy.headingAccent}
+              {CORTEFINO_COPY.headingAccent}
             </em>
           </h2>
           <p className="mt-6 text-sm font-mono text-petal/50 max-w-[46ch] leading-relaxed">
-            {cortefinoSectionCopy.intro}
+            {CORTEFINO_COPY.intro}
           </p>
         </header>
 
@@ -99,20 +102,22 @@ export default function CorteFinoSection() {
         {/* ── Row 2: IG strip — 5 animaciones en fila única ───────────────── */}
         <div className="cf2-ig-strip">
           <div className="cf2-ig-strip__head">
-            <p className="cf2-ig-strip__label" aria-hidden="true">Contenido IG</p>
+            <p className="cf2-ig-strip__label" aria-hidden="true">
+              {CORTEFINO_COPY.igStrip.label}
+            </p>
             <a
               href={CORTEFINO_IG_PROFILE}
               target="_blank"
               rel="noopener noreferrer"
               className="cf2-ig-strip__handle"
-              aria-label="Ver perfil de Cortefino en Instagram"
+              aria-label={CORTEFINO_COPY.igStrip.profileAriaLabel}
             >
-              @cortefino.ec
+              {CORTEFINO_COPY.igStrip.handle}
             </a>
           </div>
           <div
             className="cf2-ig-row"
-            aria-label="Animaciones de marca para Instagram — Cortefino"
+            aria-label={CORTEFINO_COPY.igStrip.animationsAriaLabel}
           >
             {animationVideos.map((anim, i) => (
               <div key={anim.id} className="bento-cell" data-col={String(i + 3)}>

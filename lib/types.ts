@@ -82,6 +82,7 @@ export interface HeroCopy {
 }
 
 export interface AboutCopy {
+  sectionIndex:      string
   sectionLabel:      string
   headingMain:       string
   headingAccent:     string
@@ -95,6 +96,11 @@ export interface AboutCopy {
   }
   softwareTags: readonly string[]
   areaTags:     readonly string[]
+  labels: {
+    social:   string
+    software: string
+    areas:    string
+  }
 }
 
 export interface AboutSocialLink {
@@ -133,6 +139,7 @@ export interface ContactFooter {
 }
 
 export interface ContactCopy {
+  sectionIndex:  string
   sectionLabel:  string
   headingGlitch: string
   headingAccent: string
@@ -142,12 +149,112 @@ export interface ContactCopy {
   email:         string
   items:         readonly ContactItem[]
   footer:        ContactFooter
+  labels: {
+    email:    string
+    social:   string
+    madeWith: string
+  }
 }
 
 export interface SkillChipData {
   icon: string
   name: string
   sub:  string
+}
+
+export interface SkillsSectionCopy {
+  sectionIndex:  string
+  sectionLabel:  string
+  headingPrefix: string
+  headingAccent: string
+  headingLine2:  string
+  ariaLabel:     string
+  tracks: {
+    software:    string
+    disciplines: string
+  }
+}
+
+export interface UgcSectionCopy {
+  sectionIndex: string
+  sectionLabel: string
+  headingMain:  string
+  headingAccent:string
+  intro:        string
+  ariaLabel:    string
+  indexAriaLabel: string
+  scrollHint:   string
+  liveMsg: {
+    prefix: string
+    of:     string
+  }
+  nav: {
+    prev:              string
+    next:              string
+    openTikTokSuffix:  string
+    centerReelPrefix:  string
+    prevFallback:      string
+    nextFallback:      string
+  }
+}
+
+export interface ProduccionesPhotoItem {
+  src: string
+  alt: string
+}
+
+export interface ProduccionesSectionCopy {
+  sectionIndex:           string
+  sectionLabel:           string
+  headingMain:            string
+  headingAccent:          string
+  intro:                  string
+  ariaLabel:              string
+  videosAriaLabel:        string
+  personalPhotosLabel:    string
+  personalPhotosAriaLabel:string
+  /** IDs de videos excluidos del strip (lógica de layout) */
+  excludedVideoIds:       readonly string[]
+}
+
+export interface TonimixKeyVisualItem {
+  src:       string
+  alt:       string
+  client:    string
+  title:     string
+  category:  string
+  imgWidth:  number
+  imgHeight: number
+}
+
+export interface TonimixMerchItem {
+  src:   string
+  alt:   string
+  title: string
+}
+
+export interface TonimixSectionCopy {
+  sectionIndex:  string
+  sectionLabel:  string
+  headingMain:   string
+  headingAccent: string
+  intro:         string
+  ariaLabel:     string
+  merchLabel:    string
+  merchAriaLabel:string
+}
+
+export interface LinkedInAchievementCopy {
+  ariaLabel:      string
+  badge:          string
+  badgeAriaLabel: string
+  titleLine1:     string
+  titleLine2:     string
+  description:    string
+  tags:           string
+  cta:            string
+  ctaAriaLabel:   string
+  url:            string
 }
 
 // ── Cortefino UGC — imágenes en /public/ugc/cortefino (ADR-006) ───────────────
@@ -195,10 +302,18 @@ export interface CortefinoStaticData {
 }
 
 export interface CortefinoSectionCopy {
-  sectionLabel: string
-  headingMain:  string
-  headingAccent:string
-  intro:        string
+  sectionIndex:  string
+  sectionLabel:  string
+  headingMain:   string
+  headingAccent: string
+  intro:         string
+  ariaLabel:     string
+  igStrip: {
+    label:              string
+    handle:             string
+    profileAriaLabel:   string
+    animationsAriaLabel:string
+  }
 }
 
 /** Slide resuelto con URL pública — props de CarouselSlider */

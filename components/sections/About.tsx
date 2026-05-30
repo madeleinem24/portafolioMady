@@ -1,6 +1,7 @@
 // ─────────────────────────────────────────────────────────────────────────────
 // components/sections/About.tsx — Sección sobre Madeleine (paridad HTML v3 #about)
-// Layout: foto IZQUIERDA ~45% · contenido DERECHA ~55% · lg:items-center
+// Layout: foto IZQUIERDA ~45% · contenido DERECHA ~55% (desktop)
+// Mobile: foto ARRIBA · copy ABAJO · todo centrado (≤1023px)
 // Fondo: .section-bg-b en page.tsx · pills .tag lavender / .tag.green lime
 // Server Component
 // ─────────────────────────────────────────────────────────────────────────────
@@ -22,19 +23,19 @@ export default function About() {
     >
       <div className="container-editorial">
 
-        <div className="grid grid-cols-1 gap-12 lg:grid-cols-[minmax(0,0.45fr)_minmax(0,0.55fr)] lg:gap-20 lg:items-center">
+        <div className="about-grid grid grid-cols-1 gap-12 lg:grid-cols-[minmax(0,0.45fr)_minmax(0,0.55fr)] lg:gap-20 lg:items-center">
 
-          {/* ── Columna izquierda: foto ──────────────────────────────────── */}
-          <div className="relative order-2 lg:order-1">
-            <div className="relative aspect-[3/4] w-full max-w-[22rem] mx-auto lg:mx-0 lg:max-w-none overflow-hidden bg-shadow">
+          {/* ── Columna izquierda: foto (arriba en mobile, izquierda en desktop) ─ */}
+          <div className="about-photo-col relative w-full min-w-0">
+            <div className="about-photo-frame relative aspect-[3/4] overflow-hidden bg-shadow">
               <Image
                 src={ABOUT_COPY.photo.src}
                 alt={ABOUT_COPY.photo.alt}
                 fill
                 unoptimized
-                loading="lazy"
+                priority
                 className="object-cover object-top [filter:saturate(0.8)]"
-                sizes="(max-width: 1023px) 80vw, 45vw"
+                sizes="(max-width: 1023px) 78vw, 45vw"
               />
 
               <div
@@ -55,18 +56,19 @@ export default function About() {
           </div>
 
           {/* ── Columna derecha: contenido ─────────────────────────────── */}
-          <div className="order-1 lg:order-2 flex flex-col gap-10">
+          <div className="about-content flex flex-col gap-10">
 
-            <div className="flex flex-col gap-6">
-              <SectionLabel index="01" text={ABOUT_COPY.sectionLabel} lineFull />
+            <div className="about-intro flex flex-col gap-6">
+              <SectionLabel
+                index={ABOUT_COPY.sectionIndex}
+                text={ABOUT_COPY.sectionLabel}
+                lineFull
+                className="about-section-label"
+              />
 
               <h2
                 id="about-heading"
-                className={[
-                  'font-display font-black text-canvas',
-                  'text-[clamp(2rem,4vw,3.5rem)]',
-                  'leading-[0.9] tracking-[-0.035em] uppercase',
-                ].join(' ')}
+                className="about-heading font-display font-black text-canvas leading-[0.9] tracking-[-0.035em] uppercase"
               >
                 {ABOUT_COPY.headingMain}
                 <em
@@ -80,20 +82,20 @@ export default function About() {
                 </em>
               </h2>
 
-              <p className="font-mono text-[length:var(--text-body-sm)] uppercase tracking-[0.15em] text-dusk">
+              <p className="about-subtitle font-mono uppercase tracking-[0.15em] text-dusk">
                 {ABOUT_COPY.subtitle}
               </p>
             </div>
 
-            <div className="flex flex-col gap-4 max-w-[50ch]">
+            <div className="about-bio flex flex-col gap-4 max-w-[50ch]">
               {ABOUT_COPY.bio.map((p, i) => (
                 <p key={i} className="type-lead">{p}</p>
               ))}
             </div>
 
             <div className="flex flex-col gap-3">
-              <p className="type-nano text-petal/45">Redes</p>
-              <div className="flex flex-wrap gap-2.5">
+              <p className="type-nano text-petal/45">{ABOUT_COPY.labels.social}</p>
+              <div className="about-pill-row flex flex-wrap gap-2.5">
                 {ABOUT_COPY.socialLinks.map((social) => (
                   <a
                     key={social.id}
@@ -119,10 +121,10 @@ export default function About() {
               </div>
             </div>
 
-            <div className="flex flex-col gap-10">
+            <div className="about-tags flex flex-col gap-10">
               <div className="flex flex-col gap-2.5">
-                <p className="type-nano text-lavender/45">Software</p>
-                <div className="flex flex-wrap gap-2">
+                <p className="type-nano text-lavender/45">{ABOUT_COPY.labels.software}</p>
+                <div className="about-pill-row flex flex-wrap gap-2">
                   {ABOUT_COPY.softwareTags.map((tag) => (
                     <span key={tag} className="about-pill">
                       {tag}
@@ -132,8 +134,8 @@ export default function About() {
               </div>
 
               <div className="flex flex-col gap-2.5">
-                <p className="type-nano text-lime">Áreas</p>
-                <div className="flex flex-wrap gap-2">
+                <p className="type-nano text-lime">{ABOUT_COPY.labels.areas}</p>
+                <div className="about-pill-row flex flex-wrap gap-2">
                   {ABOUT_COPY.areaTags.map((tag) => (
                     <span key={tag} className="about-pill about-pill--lime">
                       {tag}

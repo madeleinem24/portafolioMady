@@ -7,21 +7,21 @@
 import Image from 'next/image'
 
 import { assetPath } from '@/lib/asset-path'
-
-const LINKEDIN_URL =
-  'https://www.linkedin.com/posts/madeleine-morales-diaz-773333117_retrodigital-ecuador-design-activity-7424223803481690112-eE4-'
+import { LINKEDIN_ACHIEVEMENT_COPY } from '@/lib/content'
 
 export default function LinkedInAchievementCard() {
+  const copy = LINKEDIN_ACHIEVEMENT_COPY
+
   return (
     <article
       className="linkedin-card"
-      aria-label="Logro destacado: reconocimiento RetroDigital Ecuador"
+      aria-label={copy.ariaLabel}
     >
       {/* ── Cabecera ──────────────────────────────────────────────── */}
       <header className="linkedin-card__head">
-        <span className="linkedin-card__badge" aria-label="Logro destacado">
+        <span className="linkedin-card__badge" aria-label={copy.badgeAriaLabel}>
           <AwardStar />
-          Logro destacado
+          {copy.badge}
         </span>
         <LinkedInLogo />
       </header>
@@ -51,24 +51,23 @@ export default function LinkedInAchievementCard() {
       {/* ── Contenido ─────────────────────────────────────────────── */}
       <div className="linkedin-card__body">
         <h3 className="linkedin-card__title">
-          RetoDigital<br />Ecuador
+          {copy.titleLine1}<br />{copy.titleLine2}
         </h3>
         <p className="linkedin-card__desc">
-          Dirección de arte y diseño de campaña para Tonimix reconocidos en
-          la escena creativa nacional.{' '}
-          <span className="linkedin-card__tags">#retodigital #ecuador #design #effie #tonicorp</span>
+          {copy.description}{' '}
+          <span className="linkedin-card__tags">{copy.tags}</span>
         </p>
       </div>
 
       {/* ── CTA ───────────────────────────────────────────────────── */}
       <a
-        href={LINKEDIN_URL}
+        href={copy.url}
         target="_blank"
         rel="noopener noreferrer"
         className="linkedin-card__cta"
-        aria-label="Ver publicación de logro RetroDigital en LinkedIn (abre en nueva pestaña)"
+        aria-label={copy.ctaAriaLabel}
       >
-        Ver publicación <span aria-hidden="true">→</span>
+        {copy.cta} <span aria-hidden="true">→</span>
       </a>
     </article>
   )

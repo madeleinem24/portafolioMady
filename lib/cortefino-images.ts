@@ -7,7 +7,6 @@ import { assetPath } from '@/lib/asset-path'
 import type {
   CortefinoCarouselData,
   CortefinoCarouselSliderData,
-  CortefinoSectionCopy,
   CortefinoSlideData,
   CortefinoStaticData,
 } from '@/lib/types'
@@ -36,15 +35,6 @@ function slide(
     caption:     '',
     description: '',
   }
-}
-
-// ── Copy de sección ───────────────────────────────────────────────────────────
-
-export const cortefinoSectionCopy: CortefinoSectionCopy = {
-  sectionLabel:  'Cortefino',
-  headingMain:   'Diseño /',
-  headingAccent: 'en detalle.',
-  intro:         'Carruseles interactivos, piezas estáticas y animaciones de marca producidas para Cortefino.',
 }
 
 // ── Carruseles ────────────────────────────────────────────────────────────────

@@ -16,6 +16,7 @@ import {
 import SectionLabel from '@/components/ui/SectionLabel'
 import TikTokFrame from '@/components/ui/TikTokFrame'
 import UgcSlidePreview from '@/components/ui/UgcSlidePreview'
+import { UGC_COPY } from '@/lib/content'
 import { getUgcVideoOpenUrl, getUgcVideoPosterUrl, getUgcVideoPreviewUrl, ugcVideos } from '@/lib/videos'
 import type { UgcVideoData } from '@/lib/types'
 
@@ -71,7 +72,7 @@ export default function UgcCarousel() {
 
   useEffect(() => {
     if (!current) return
-    setLiveMsg(`Reel ${active + 1} de ${total}: ${current.title}`)
+    setLiveMsg(`${UGC_COPY.liveMsg.prefix} ${active + 1} ${UGC_COPY.liveMsg.of} ${total}: ${current.title}`)
   }, [active, total, current])
 
   useEffect(() => {
@@ -147,14 +148,14 @@ export default function UgcCarousel() {
       className="relative isolate overflow-x-visible overflow-y-hidden section-pad-ugc"
       aria-labelledby={headingId}
       role="region"
-      aria-label="Reels UGC"
+      aria-label={UGC_COPY.ariaLabel}
       tabIndex={-1}
     >
       <div className="ugc-tiktok-atmosphere" aria-hidden="true" />
 
       <div className="container-editorial ugc-inner">
         <div className="ugc-head mb-10 md:mb-14">
-          <SectionLabel index="04" text="Reels UGC" lineFull className="mb-4" />
+          <SectionLabel index={UGC_COPY.sectionIndex} text={UGC_COPY.sectionLabel} lineFull className="mb-4" />
 
           <h2
             id={headingId}
@@ -164,7 +165,7 @@ export default function UgcCarousel() {
               'leading-[0.9] tracking-[-0.035em] uppercase',
             ].join(' ')}
           >
-            Contenido
+            {UGC_COPY.headingMain}
             <br />
             <em
               className={[
@@ -172,19 +173,19 @@ export default function UgcCarousel() {
                 'text-lime text-[1.05em] tracking-[-0.02em]',
               ].join(' ')}
             >
-              en movimiento.
+              {UGC_COPY.headingAccent}
             </em>
           </h2>
 
           <p className="type-lead mt-6 max-w-[42ch] text-petal/55">
-            Previews auténticos para TikTok. Desliza o usa las flechas; toca el teléfono para abrir en la app.
+            {UGC_COPY.intro}
           </p>
         </div>
 
         <div
           className="ugc-indicator mb-8 flex items-center justify-center gap-3"
           role="tablist"
-          aria-label="Índice de reels"
+          aria-label={UGC_COPY.indexAriaLabel}
         >
           {ugcVideos.map((_, i) => (
             <button
@@ -215,7 +216,7 @@ export default function UgcCarousel() {
               type="button"
               className="ugc-nav-btn ugc-nav-btn--prev"
               onClick={goPrev}
-              aria-label="Reel anterior"
+              aria-label={UGC_COPY.nav.prev}
             >
               <span aria-hidden="true">←</span>
             </button>
@@ -234,8 +235,8 @@ export default function UgcCarousel() {
                       onClick={() => goTo(prevIndex)}
                       aria-label={
                         prevVideo
-                          ? `Centrar reel: ${prevVideo.title}`
-                          : 'Reel anterior'
+                          ? `${UGC_COPY.nav.centerReelPrefix}${prevVideo.title}`
+                          : UGC_COPY.nav.prevFallback
                       }
                     >
                       <UgcSlidePreview
@@ -252,7 +253,7 @@ export default function UgcCarousel() {
                       type="button"
                       className={activeHitClass}
                       onClick={openTikTok}
-                      aria-label={`${current.videoAlt}. Abrir en TikTok`}
+                      aria-label={`${current.videoAlt}${UGC_COPY.nav.openTikTokSuffix}`}
                     >
                       <TikTokFrame
                         key={current.id}
@@ -271,8 +272,8 @@ export default function UgcCarousel() {
                       onClick={() => goTo(nextIndex)}
                       aria-label={
                         nextVideo
-                          ? `Centrar reel: ${nextVideo.title}`
-                          : 'Reel siguiente'
+                          ? `${UGC_COPY.nav.centerReelPrefix}${nextVideo.title}`
+                          : UGC_COPY.nav.nextFallback
                       }
                     >
                       <UgcSlidePreview
@@ -291,7 +292,7 @@ export default function UgcCarousel() {
                       type="button"
                       className={activeHitClass}
                       onClick={openTikTok}
-                      aria-label={`${current.videoAlt}. Abrir en TikTok`}
+                      aria-label={`${current.videoAlt}${UGC_COPY.nav.openTikTokSuffix}`}
                     >
                       <TikTokFrame
                         key={current.id}
@@ -310,7 +311,7 @@ export default function UgcCarousel() {
               type="button"
               className="ugc-nav-btn ugc-nav-btn--next"
               onClick={goNext}
-              aria-label="Reel siguiente"
+              aria-label={UGC_COPY.nav.next}
             >
               <span aria-hidden="true">→</span>
             </button>
@@ -318,7 +319,7 @@ export default function UgcCarousel() {
 
           {!isInView && (
             <p className="type-nano mt-6 text-center text-petal/45">
-              Desliza hasta esta sección para activar previews
+              {UGC_COPY.scrollHint}
             </p>
           )}
         </div>

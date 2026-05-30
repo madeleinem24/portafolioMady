@@ -10,6 +10,12 @@ import type {
   ServiceItem,
   ServicesCopy,
   ContactCopy,
+  SkillsSectionCopy,
+  UgcSectionCopy,
+  ProduccionesSectionCopy,
+  TonimixSectionCopy,
+  LinkedInAchievementCopy,
+  CortefinoSectionCopy,
 } from '@/lib/types'
 
 // ── Hero ─────────────────────────────────────────────────────────────────────
@@ -49,6 +55,7 @@ export const SLIDER_ITEMS = [
 // ── About ─────────────────────────────────────────────────────────────────────
 
 export const ABOUT_COPY: AboutCopy = {
+  sectionIndex:     '01',
   sectionLabel:     'Sobre mí',
   headingMain:      'Creativa de',
   headingAccent:    'corazón.',
@@ -67,7 +74,7 @@ export const ABOUT_COPY: AboutCopy = {
     {
       id:    'linkedin',
       label: 'LinkedIn',
-      href:  'https://www.linkedin.com/posts/madeleine-morales-diaz-773333117_retrodigital-ecuador-design-activity-7424223803481690112-eE4-',
+      href:  'https://www.linkedin.com/in/madeleine-morales-diaz-773333117/',
     },
     {
       id:    'whatsapp',
@@ -87,6 +94,11 @@ export const ABOUT_COPY: AboutCopy = {
     'Diseño Gráfico', 'Contenido UGC', 'Fotografía',
     'Animación 2D', 'Edición de video', 'Branding', 'Social Media',
   ],
+  labels: {
+    social:   'Redes',
+    software: 'Software',
+    areas:    'Áreas',
+  },
 }
 
 // ── Services ──────────────────────────────────────────────────────────────────
@@ -152,7 +164,112 @@ export const SERVICES: ServiceItem[] = [
 
 const CONTACT_EMAIL = 'mademd24@gmail.com'
 
+// ── Skills ────────────────────────────────────────────────────────────────────
+
+export const SKILLS_COPY: SkillsSectionCopy = {
+  sectionIndex:  '08',
+  sectionLabel:  'Herramientas',
+  headingPrefix: 'Mi ',
+  headingAccent: 'arsenal',
+  headingLine2:  'creativo.',
+  ariaLabel:     'Herramientas y disciplinas creativas',
+  tracks: {
+    software:    'Software de diseño',
+    disciplines: 'Disciplinas creativas',
+  },
+}
+
+// ── UGC Carousel ──────────────────────────────────────────────────────────────
+
+export const UGC_COPY: UgcSectionCopy = {
+  sectionIndex:   '04',
+  sectionLabel:   'Reels UGC',
+  headingMain:    'Contenido',
+  headingAccent:  'en movimiento.',
+  intro:          'Previews auténticos para TikTok. Desliza o usa las flechas; toca el teléfono para abrir en la app.',
+  ariaLabel:      'Reels UGC',
+  indexAriaLabel: 'Índice de reels',
+  scrollHint:     'Desliza hasta esta sección para activar previews',
+  liveMsg: {
+    prefix: 'Reel',
+    of:     'de',
+  },
+  nav: {
+    prev:             'Reel anterior',
+    next:             'Reel siguiente',
+    openTikTokSuffix: '. Abrir en TikTok',
+    centerReelPrefix: 'Centrar reel: ',
+    prevFallback:     'Reel anterior',
+    nextFallback:     'Reel siguiente',
+  },
+}
+
+// ── Cortefino ─────────────────────────────────────────────────────────────────
+
+export const CORTEFINO_COPY: CortefinoSectionCopy = {
+  sectionIndex:  '05',
+  sectionLabel:  'Cortefino',
+  headingMain:   'Diseño /',
+  headingAccent: 'en detalle.',
+  intro:         'Carruseles interactivos, piezas estáticas y animaciones de marca producidas para Cortefino.',
+  ariaLabel:     'Cliente: Cortefino — diseño gráfico',
+  igStrip: {
+    label:               'Contenido IG',
+    handle:              '@cortefino.ec',
+    profileAriaLabel:    'Ver perfil de Cortefino en Instagram',
+    animationsAriaLabel: 'Animaciones de marca para Instagram — Cortefino',
+  },
+}
+
+// ── Tonimix ───────────────────────────────────────────────────────────────────
+
+export const TONIMIX_COPY: TonimixSectionCopy = {
+  sectionIndex:  '06',
+  sectionLabel:  'Tonimix',
+  headingMain:   'Identidad',
+  headingAccent: 'de marca.',
+  intro:         'Dirección de arte, key visuals, MUPI y merchandising para Tonimix. Campaña retrodigital reconocida en la escena creativa ecuatoriana.',
+  ariaLabel:     'Cliente: Tonimix — identidad de marca',
+  merchLabel:    'Merchandising',
+  merchAriaLabel:'Línea de merchandising Tonimix',
+}
+
+export const LINKEDIN_ACHIEVEMENT_COPY: LinkedInAchievementCopy = {
+  ariaLabel:      'Logro destacado: reconocimiento RetroDigital Ecuador',
+  badge:          'Logro destacado',
+  badgeAriaLabel: 'Logro destacado',
+  titleLine1:     'RetoDigital',
+  titleLine2:     'Ecuador',
+  description:    'Dirección de arte y diseño de campaña para Tonimix reconocidos en la escena creativa nacional.',
+  tags:           '#retodigital #ecuador #design #effie #tonicorp',
+  cta:            'Ver publicación',
+  ctaAriaLabel:   'Ver publicación de logro RetroDigital en LinkedIn (abre en nueva pestaña)',
+  url:            'https://www.linkedin.com/posts/madeleine-morales-diaz-773333117_retrodigital-ecuador-design-activity-7424223803481690112-eE4-',
+}
+
+// ── Producciones ──────────────────────────────────────────────────────────────
+
+export const PRODUCCIONES_COPY: ProduccionesSectionCopy = {
+  sectionIndex:            '07',
+  sectionLabel:            'Producciones',
+  headingMain:             'Narrativas',
+  headingAccent:           'audiovisuales.',
+  intro:                   'Producciones universitarias y cortometrajes. Desde escenografía experimental hasta documentales sobre la identidad cultural de Guayaquil.',
+  ariaLabel:               'Producciones audiovisuales y fotografías',
+  videosAriaLabel:         'Videos de producción',
+  personalPhotosLabel:     '/ Fotografías personales',
+  personalPhotosAriaLabel: 'Fotografías personales de producción',
+  excludedVideoIds:        ['prod-pony-nebula'],
+}
+
+// ── Marquee ─────────────────────────────────────────────────────────────────────
+
+export const SLIDER_ARIA_LABEL = 'Disciplinas de diseño'
+
+// ── Contact ───────────────────────────────────────────────────────────────────
+
 export const CONTACT_COPY: ContactCopy = {
+  sectionIndex:  '09',
   sectionLabel:  'Contacto',
   headingGlitch: 'Hablemos',
   headingAccent: 'juntos.',
@@ -174,5 +291,10 @@ export const CONTACT_COPY: ContactCopy = {
     copy:     '© 2026 Madeleine Morales Diaz',
     tagline:  'Diseño · UGC · Audiovisual',
     madeIn:   'en Guayaquil',
+  },
+  labels: {
+    email:    'Email',
+    social:   'Redes',
+    madeWith: 'Hecho con',
   },
 }

@@ -52,7 +52,7 @@ export default function Hero() {
 
       {/* z-2 — tag + H1 delante del retrato */}
       <div className="hero-headline">
-        <p className="hero-enter-tag hero-tag font-mono text-micro uppercase tracking-[0.28em] text-lavender sm:text-[length:var(--text-label)]">
+        <p className="hero-enter-tag hero-tag">
           <span className="hero-tag-line" aria-hidden="true" />
           {HERO_COPY.tag}
         </p>
@@ -65,8 +65,10 @@ export default function Hero() {
           <span aria-hidden="true">
             {HERO_COPY.namePrefix}
             <br />
-            <span className="type-outline">{HERO_COPY.nameOutline}</span>
-            <span className="type-hero-serif">{HERO_COPY.nameSerif}</span>
+            <span className="hero-name-accent">
+              {HERO_COPY.nameOutline}
+              {HERO_COPY.nameSerif}
+            </span>
             <br />
             {HERO_COPY.nameSuffix}
           </span>
@@ -107,13 +109,13 @@ export default function Hero() {
               {stat.value}
               <span className="text-lavender" aria-hidden="true">{stat.suffix}</span>
             </span>
-            <span className="type-label text-micro text-petal/45">{stat.label}</span>
+            <span className="hero-stat-label">{stat.label}</span>
           </div>
         ))}
       </div>
 
       <div className="hero-enter-scroll hero-scroll-cue" aria-hidden="true">
-        <span className="type-label text-micro tracking-[0.3em] text-petal/40 uppercase">
+        <span className="hero-scroll-label">
           {HERO_COPY.scrollLabel}
         </span>
         <div className="hero-scroll-line motion-safe:animate-[scrollPulse_2s_var(--ease-in-out)_infinite]" />

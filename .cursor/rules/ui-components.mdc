@@ -43,6 +43,8 @@ Escala (clamp fluid):
 
 **Regla:** mínimo 3 pasos de diferencia entre el texto mayor y menor de cada sección.
 
+**Regla responsive:** si una sección o bloque es fluido/responsive, **todos** sus niveles tipográficos deben escalar con `clamp()` — nunca solo el titular. Usar tokens en `:root` (p. ej. `--text-hero-tag`, `--text-hero-desc`, `--text-hero-cta`) y aplicarlos vía clases del componente; no mezclar `text-micro` / `text-label` fijos con un H1 fluido.
+
 ## Espaciado de secciones
 
 ```
