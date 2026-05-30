@@ -28,23 +28,27 @@ export default function LinkedInAchievementCard() {
 
       {/* ── Fotos ─────────────────────────────────────────────────── */}
       <div className="linkedin-card__photos" aria-hidden="true">
-        <div className="linkedin-card__photo">
-          <Image
-            src={assetPath('/ugc/tonimix/linkedin-1.webp')}
-            alt=""
-            fill
-            unoptimized
-            className="object-cover"
-          />
+        <div className="linkedin-card__photo editorial-print-frame">
+          <div className="editorial-print-frame__inner">
+            <Image
+              src={assetPath('/ugc/tonimix/linkedin-1.webp')}
+              alt=""
+              fill
+              unoptimized
+              className="object-cover"
+            />
+          </div>
         </div>
-        <div className="linkedin-card__photo">
-          <Image
-            src={assetPath('/ugc/tonimix/linkedin-2.webp')}
-            alt=""
-            fill
-            unoptimized
-            className="object-cover"
-          />
+        <div className="linkedin-card__photo editorial-print-frame linkedin-card__photo--fit">
+          <div className="editorial-print-frame__inner">
+            <Image
+              src={assetPath('/ugc/tonimix/linkedin-2.webp')}
+              alt=""
+              fill
+              unoptimized
+              className="object-contain"
+            />
+          </div>
         </div>
       </div>
 

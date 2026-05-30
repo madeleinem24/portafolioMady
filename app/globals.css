@@ -3298,13 +3298,12 @@ body {
 .linkedin-card__photos {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: var(--spacing-2);
+  gap: var(--spacing-3);
 }
 
 .linkedin-card__photo {
   position: relative;
   aspect-ratio: 4 / 3;
-  overflow: hidden;
 }
 
 .linkedin-card__title {
@@ -3617,6 +3616,42 @@ body {
   }
 }
 
+/* ── Marco editorial tipo impresión (canvas fino sobre void) ─────────────
+   Patrón compartido: Producciones fotos · Tonimix merch · LinkedIn logro.
+   Token del borde: --color-canvas · sombra tintada void.
+   ─────────────────────────────────────────────────────────────────────── */
+.editorial-print-frame {
+  display: flex;
+  flex-direction: column;
+  padding: var(--spacing-1);
+  background: var(--color-canvas);
+  box-shadow:
+    0 1px 2px oklch(0.148 0.069 328 / 0.30),
+    0 6px 16px oklch(0.148 0.069 328 / 0.22);
+  overflow: hidden;
+}
+
+.editorial-print-frame__inner {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  overflow: hidden;
+}
+
+.editorial-print-frame:focus-within {
+  outline: 2px solid var(--color-lavender);
+  outline-offset: 3px;
+}
+
+.editorial-print-frame .kv-cell__overlay {
+  display: none;
+}
+
+.editorial-print-frame .kv-cell:hover .kv-cell__img {
+  transform: none;
+}
+
 /* ═══════════════════════════════════════════════════════════════════════════
    §06 TONIMIX — key visuals + LinkedIn + merch
    ═══════════════════════════════════════════════════════════════════════════ */
@@ -3673,7 +3708,7 @@ body {
 .toni-merch-item .kv-cell__media {
   flex: 1;
   min-height: 0;
-  background: oklch(0.18 0.06 220);
+  background: transparent;
 }
 
 /* Fila 2: LinkedIn (7fr) + KV2 (5fr) */
@@ -3718,8 +3753,6 @@ body {
 .toni-merch-item {
   position: relative;
   aspect-ratio: 1;
-  overflow: hidden;
-  background: oklch(0.18 0.06 220);
 }
 
 /* Responsive Tonimix */
@@ -3766,21 +3799,61 @@ body {
   margin-bottom: var(--spacing-4);
 }
 
-/* Grid de fotos: 3 columnas iguales */
-.prod-personal__grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+/* Tira horizontal de fotos — scroll oculto, fila única */
+.prod-personal__track {
+  display: flex;
+  flex-wrap: nowrap;
   gap: var(--spacing-4);
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding-bottom: var(--spacing-2);
 }
 
-/* Cada foto: marco editorial + ratio portrait */
+.prod-personal__track::-webkit-scrollbar {
+  display: none;
+}
+
+.prod-personal__track:focus-visible {
+  outline: 2px solid var(--color-lavender);
+  outline-offset: 4px;
+}
+
+.prod-personal__track--scrollable {
+  cursor: grab;
+}
+
+.prod-personal__track--scrollable.prod-personal__track--dragging {
+  cursor: grabbing;
+}
+
+@media (min-width: 1280px) {
+  .prod-personal__track--centered {
+    justify-content: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .prod-personal__track {
+    scroll-behavior: auto;
+  }
+}
+
+/* Cada foto: marco tipo impresión — layout del track (ver .editorial-print-frame) */
 .prod-personal__frame {
   position: relative;
+  flex-shrink: 0;
+  width: clamp(9rem, 18vw, 16rem);
   aspect-ratio: 3 / 4;
-  overflow: hidden;
-  border: 1px solid oklch(0.499 0.082 347 / 0.35);
-  outline: 4px solid oklch(0.148 0.069 328);
-  outline-offset: -5px;
+}
+
+@media (min-width: 640px) {
+  .prod-personal__frame {
+    width: clamp(11rem, 22vw, 16rem);
+  }
 }
 
 /* Responsive */
@@ -3792,10 +3865,6 @@ body {
 
 @media (max-width: 639px) {
   .prod-strip {
-    grid-template-columns: 1fr;
-  }
-
-  .prod-personal__grid {
     grid-template-columns: 1fr;
   }
 }
@@ -4077,6 +4146,7 @@ body {
 /* kv-cell dentro de las fotografías personales de Producciones */
 .prod-personal__frame .kv-cell {
   height: 100%;
+  overflow: hidden;
 }
 
 .prod-personal__frame .kv-cell__media {

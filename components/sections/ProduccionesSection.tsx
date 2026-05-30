@@ -3,10 +3,10 @@
 // ─────────────────────────────────────────────────────────────────────────────
 // components/sections/ProduccionesSection.tsx — §07 PRODUCCIONES
 // Layout: strip horizontal de 4 videos 16:9 (igual altura, 4 cols)
-//         + tira de 3 fotografías personales con marco y label
+//         + tira horizontal de fotografías personales con marco tipo impresión
 // ─────────────────────────────────────────────────────────────────────────────
 
-import { useEffect, useRef } from 'react'
+import { useCallback, useEffect, useRef } from 'react'
 
 import UgcProductionCell from '@/components/ui/UgcProductionCell'
 import UgcKeyVisualCell  from '@/components/ui/UgcKeyVisualCell'
@@ -17,6 +17,89 @@ import { productionVideos } from '@/lib/videos'
 
 export default function ProduccionesSection() {
   const sectionRef = useRef<HTMLElement>(null)
+  const trackRef = useRef<HTMLDivElement>(null)
+  const hasOverflowRef = useRef(false)
+  const dragRef = useRef({ active: false, startX: 0, scrollLeft: 0 })
+
+  const syncTrackOverflow = useCallback(() => {
+    const track = trackRef.current
+    if (!track) return
+
+    const scrollable = track.scrollWidth > track.clientWidth
+    hasOverflowRef.current = scrollable
+    track.classList.toggle('prod-personal__track--scrollable', scrollable)
+    track.classList.toggle('prod-personal__track--centered', !scrollable)
+  }, [])
+
+  useEffect(() => {
+    const track = trackRef.current
+    if (!track) return
+
+    syncTrackOverflow()
+
+    const resizeObserver = new ResizeObserver(syncTrackOverflow)
+    resizeObserver.observe(track)
+
+    const onWheel = (event: WheelEvent) => {
+      if (!hasOverflowRef.current || event.deltaY === 0) return
+      event.preventDefault()
+      track.scrollLeft += event.deltaY
+    }
+
+    const onPointerDown = (event: PointerEvent) => {
+      if (!hasOverflowRef.current || event.button !== 0) return
+      dragRef.current = {
+        active: true,
+        startX: event.clientX,
+        scrollLeft: track.scrollLeft,
+      }
+      track.classList.add('prod-personal__track--dragging')
+      track.setPointerCapture(event.pointerId)
+    }
+
+    const onPointerMove = (event: PointerEvent) => {
+      if (!dragRef.current.active) return
+      track.scrollLeft = dragRef.current.scrollLeft - (event.clientX - dragRef.current.startX)
+    }
+
+    const endDrag = (event: PointerEvent) => {
+      if (!dragRef.current.active) return
+      dragRef.current.active = false
+      track.classList.remove('prod-personal__track--dragging')
+      track.releasePointerCapture(event.pointerId)
+    }
+
+    track.addEventListener('wheel', onWheel, { passive: false })
+    track.addEventListener('pointerdown', onPointerDown)
+    track.addEventListener('pointermove', onPointerMove)
+    track.addEventListener('pointerup', endDrag)
+    track.addEventListener('pointercancel', endDrag)
+
+    return () => {
+      resizeObserver.disconnect()
+      track.removeEventListener('wheel', onWheel)
+      track.removeEventListener('pointerdown', onPointerDown)
+      track.removeEventListener('pointermove', onPointerMove)
+      track.removeEventListener('pointerup', endDrag)
+      track.removeEventListener('pointercancel', endDrag)
+    }
+  }, [syncTrackOverflow])
+
+  const handleTrackKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    const track = trackRef.current
+    if (!track || !hasOverflowRef.current) return
+
+    const step = track.clientWidth * 0.35
+    const smooth = !window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+    if (event.key === 'ArrowRight') {
+      event.preventDefault()
+      track.scrollBy({ left: step, behavior: smooth ? 'smooth' : 'auto' })
+    } else if (event.key === 'ArrowLeft') {
+      event.preventDefault()
+      track.scrollBy({ left: -step, behavior: smooth ? 'smooth' : 'auto' })
+    }
+  }
 
   useEffect(() => {
     const root = sectionRef.current
@@ -101,11 +184,17 @@ export default function ProduccionesSection() {
             <p className="prod-personal__label" aria-hidden="true">
               {PRODUCCIONES_COPY.personalPhotosLabel}
             </p>
-            <div className="prod-personal__grid" aria-label={PRODUCCIONES_COPY.personalPhotosAriaLabel}>
+            <div
+              ref={trackRef}
+              className="prod-personal__track"
+              aria-label={PRODUCCIONES_COPY.personalPhotosAriaLabel}
+              tabIndex={0}
+              onKeyDown={handleTrackKeyDown}
+            >
               {PRODUCCIONES_FOTOS.map((foto, i) => (
                 <div
                   key={foto.src}
-                  className="prod-personal__frame bento-cell"
+                  className="prod-personal__frame editorial-print-frame bento-cell"
                   data-col={String(i + 5)}
                 >
                   <UgcKeyVisualCell

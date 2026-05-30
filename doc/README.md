@@ -13,6 +13,9 @@ Documentación para escribir instrucciones claras a Cursor (Agent / Composer) al
 | [ejemplos.md](./ejemplos.md) | **Casos reales detallados** — prompt completo, corto, técnico y frases clave |
 | [flujo-skills.md](./flujo-skills.md) | **Impeccable + ui-ux-pro-max + MASTER** — quién manda, flujos combinados, prompts |
 | [referencia-tailwind.md](./referencia-tailwind.md) | Tabla rápida MASTER → `globals.css` → clases Tailwind v4 |
+| [../videos/README.md](../videos/README.md) | Compresión y registro de **videos** (`ugc_mady/` → Cloudinary) |
+
+**Media local (fotografías):** sección [Fotografías — compresión](#fotografías--compresión-ugc_mady--public) más abajo en este README.
 
 **Memoria de sesión (decisiones + estado en código):** carpeta [`../context-mode/`](../context-mode/) — no sustituye MASTER; complementa prompts largos.
 
@@ -156,7 +159,9 @@ Documentación completa (4 formatos de prompt + stack z-index):
 → **[ejemplos.md §6 — Contact + footer](./ejemplos.md#6-contact--footer-paridad-html-v3)**  
 → **[ejemplos.md §7 — Carrusel 3D UGC TikTok](./ejemplos.md#7-carrusel-3d-ugc--marco-tiktok)**  
 → **[ejemplos.md §7b — Refinamiento plantilla + 3D](./ejemplos.md#7b-refinamiento--plantilla-tiktok--carrusel-3d-decisión-fijada)**  
-→ **[ejemplos.md §7c — Estado implementado](./ejemplos.md#7c-estado-implementado--memoria-de-sesión)** · contexto → [`context-mode/ugc-tiktok-3d-carousel.md`](../context-mode/ugc-tiktok-3d-carousel.md)
+→ **[ejemplos.md §7c — Estado implementado](./ejemplos.md#7c-estado-implementado--memoria-de-sesión)** · contexto → [`context-mode/ugc-tiktok-3d-carousel.md`](../context-mode/ugc-tiktok-3d-carousel.md)  
+→ **[ejemplos.md §8 — Fotografías personales (tira horizontal)](./ejemplos.md#8-fotografías-personales--tira-horizontal-con-marco)** · §07 Producciones  
+→ **[ejemplos.md §8c — Estado implementado](./ejemplos.md#8c-estado-implementado--memoria-de-sesión)**
 
 ---
 
@@ -186,6 +191,53 @@ Inclúyelos en prompts de layout o responsive:
 - [ ] ¿Nav fijo no tapa contenido?
 - [ ] ¿Hover sin layout shift?
 - [ ] ¿`pnpm typecheck` y `pnpm lint` pasan?
+
+---
+
+## Fotografías — compresión (`ugc_mady/` → `public/`)
+
+Masters locales en `ugc_mady/fotografias/` (gitignored). Salida WebP en `public/ugc/fotografias/` (sí se commitea). Registro en `lib/producciones.ts`.
+
+| Ruta | Rol |
+|------|-----|
+| `ugc_mady/fotografias/_DSC0716.jpg` | Master local (no commitear) |
+| `public/ugc/fotografias/dsc0716.webp` | Asset del sitio |
+| `scripts/compress-ugc-fotos.py` | CLI de compresión |
+| `lib/producciones.ts` | Rutas + `alt` en §07 Producciones |
+
+**Pipeline:** EXIF orientation · máx. 1920px · WebP q=82 · nombre `_DSC0716` → `dsc0716.webp`.
+
+### Comandos
+
+Desde la **raíz del repo** (requiere `pip install Pillow`):
+
+```bash
+# Comprimir todas las fotos en ugc_mady/fotografias/
+pnpm compress-fotos
+
+# Solo archivos concretos (nuevas fotos)
+pnpm compress-fotos -- _DSC0716.jpg _DSC0994.png
+
+# Ver qué haría sin escribir archivos
+pnpm compress-fotos -- --dry-run
+```
+
+### Workflow al agregar fotos
+
+1. Copiar el master a `ugc_mady/fotografias/` (p. ej. `_DSC1234.jpg`).
+2. Ejecutar `pnpm compress-fotos -- _DSC1234.jpg`.
+3. Añadir entrada en `lib/producciones.ts` con `assetPath('/ugc/fotografias/dsc1234.webp')` y un `alt` descriptivo.
+
+### Imágenes ya en `public/` (Cortefino, Tonimix, hero, about…)
+
+Para re-comprimir assets que ya viven en `public/`:
+
+```bash
+pnpm compress-images          # solo archivos > 400 KB
+pnpm compress-images -- --all # incluir archivos pequeños
+```
+
+Script: `scripts/compress-public-images.py` (mismo pipeline EXIF + WebP).
 
 ---
 
@@ -256,4 +308,4 @@ test('nombre de la validación', async ({ page }) => {
 
 ---
 
-*Última actualización: 2026-05-15 · Proyecto: Madeleine Morales Portfolio*
+*Última actualización: 2026-05-29 · Proyecto: Madeleine Morales Portfolio*

@@ -78,7 +78,7 @@ export default function TonimixSection() {
             </p>
             <div className="toni-merch-grid">
               {TONIMIX_MERCH.map((item) => (
-                <div key={item.src} className="toni-merch-item">
+                <div key={item.src} className="toni-merch-item editorial-print-frame">
                   <UgcKeyVisualCell
                     src={item.src}
                     alt={item.alt}

@@ -11,6 +11,7 @@ Los masters locales viven en `ugc_mady/` (no se commitea). Estructura relevante:
 | `ugc_mady/corte fino/contenido de tik tok/` | Reels exportados de TikTok (Cortefino) | `cortefino-tiktok` |
 | `ugc_mady/corte fino/animaciones/` | Motion / animaciones de marca | `cortefino-animaciones` |
 | `ugc_mady/producciones/` | Piezas de producción universitarias / clientes | `mady-producciones` → salida en `videos/producciones/*_720p.mp4` (720p HD 16:9) |
+| `ugc_mady/fotografias/` | Fotografías personales (Producciones §07) | `public/ugc/fotografias/*.webp` — ver [doc/README.md § Fotografías](../doc/README.md#fotografías--compresión-ugc_mady--public) |
 | `produccion/` | Masters listos para post (ej. Pony Nebula, DESCONGELAR) | `produccion` |
 
 ### Archivos en `contenido de tik tok/` (Cortefino)

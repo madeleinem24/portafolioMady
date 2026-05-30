@@ -24,6 +24,8 @@ Guía general → [README.md](./README.md) · Plantillas por §MASTER → [promp
 | 7 | [Carrusel 3D UGC estilo TikTok](#7-carrusel-3d-ugc--marco-tiktok) | `UgcCarousel.tsx` · `TikTokFrame.tsx` · `lib/videos.ts` |
 | 7b | [Refinamiento plantilla + 3D (decisión)](#7b-refinamiento--plantilla-tiktok--carrusel-3d-decisión-fijada) | Prompt refactor |
 | 7c | [Estado implementado (memoria)](#7c-estado-implementado--memoria-de-sesión) | `UgcSlidePreview.tsx` · `context-mode/` |
+| 8 | [Fotografías personales — tira horizontal](#8-fotografías-personales--tira-horizontal-con-marco) | `ProduccionesSection.tsx` · `lib/producciones.ts` |
+| 8c | [Estado implementado (memoria)](#8c-estado-implementado--memoria-de-sesión) | `.prod-personal__track` · wheel + drag |
 
 ---
 
@@ -1230,4 +1232,319 @@ Impeccable load-context → polish. MASTER §VII. Entregable: checklist + fixes 
 
 ---
 
-*Última actualización: 2026-05-15*
+## 8. Fotografías personales — tira horizontal con marco
+
+**Objetivo visual:** Una fila horizontal de retratos verticales con marco blanco fino (como foto impresa), label `/ Fotografías personales` arriba, todas visibles en desktop si caben; si no, scroll horizontal sin barra visible, desplazable con rueda del mouse al pasar por encima (y arrastre opcional).
+
+**Referencia:** Captura de galería editorial (4 cards verticales, borde blanco, fila única, fondo claro — adaptar paleta a void del portafolio).
+
+**Estado en repo:** ✅ Implementado 2026-05-29 · Memoria viva → [§8c](#8c-estado-implementado--memoria-de-sesión)
+
+**Antes del fix:** `.prod-personal__grid` con `grid-template-columns: repeat(3, 1fr)` y stack a 1 col en mobile.
+
+---
+
+### Qué copiar en Cursor
+
+| Bloque | ¿Pegar en el chat? |
+|--------|-------------------|
+| **Prompt completo** (abajo) | **Sí** — es el prompt |
+| **Versión corta** | Solo si ya hay contexto en la misma sesión |
+| **Detalles técnicos / wheel** | **No** — referencia para auditar o corregir regresiones |
+| **Frases clave** | No hace falta; el prompt completo ya las incluye |
+
+Adjunta la captura y, opcionalmente, añade al inicio del prompt:
+
+```
+Referencia visual adjunta — tira horizontal de fotos verticales con marco blanco.
+```
+
+---
+
+### Prompt completo
+
+```
+Referencia visual adjunta — replicar SOLO el layout de la tira de fotos
+(fila horizontal, marco blanco fino tipo impresión). NO copiar fondo gris
+claro ni tipografía de la referencia: adaptar a tokens del portafolio (void,
+petal, lavender).
+
+Objetivo: refactorizar el bloque "Fotografías personales" en §07 Producciones
+para que las imágenes de lib/producciones.ts (PRODUCCIONES_FOTOS) queden
+en UNA sola fila horizontal, con marco editorial que parezca foto sacada de
+impresión (borde blanco/canvas fino alrededor de la imagen).
+
+Archivos:
+- components/sections/ProduccionesSection.tsx
+- app/globals.css (.prod-personal*, .prod-personal__track)
+- lib/producciones.ts (solo si hace falta caption opcional por foto)
+- components/ui/UgcKeyVisualCell.tsx (solo si el marco conviene como variant)
+
+Lee MASTER.md §II (colores), §IV (espaciado), §VI (bordes/marcos), §VII
+(anti-patrones). Cruza doc/referencia-tailwind.md.
+
+── Layout ──
+- Reemplazar .prod-personal__grid (grid 3 cols) por track horizontal:
+  display: flex; flex-wrap: nowrap; gap: var(--spacing-4);
+  overflow-x: auto; overflow-y: hidden;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+- Cada .prod-personal__frame:
+  · flex-shrink: 0 (no comprimir)
+  · ancho fijo con clamp: ej. width: clamp(11rem, 22vw, 16rem)
+  · aspect-ratio: 3/4 portrait (como referencia)
+  · mantener bento-cell + IntersectionObserver existente
+- Desktop ancho (≥1280px): si todas las fotos caben en container-editorial,
+  centrar la fila (.prod-personal__track--centered) — sin scroll forzado.
+- Si NO caben: scroll horizontal activo sin barra visible.
+
+── Scroll invisible + rueda del mouse ──
+CSS — ocultar scrollbar en .prod-personal__track:
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  .prod-personal__track::-webkit-scrollbar { display: none; }
+
+JS (ProduccionesSection ya es 'use client'):
+  · ref al track .prod-personal__track
+  · ResizeObserver: detectar overflow (scrollWidth > clientWidth)
+  · onWheel en el track: si hay overflow y deltaY !== 0, preventDefault y
+    track.scrollLeft += deltaY (scroll horizontal con rueda vertical)
+  · opcional: pointer drag (grab/grabbing) cuando hay overflow
+  · respetar prefers-reduced-motion: scroll-behavior auto
+
+A11y:
+  · mantener aria-label={PRODUCCIONES_COPY.personalPhotosAriaLabel}
+  · tabindex="0" en track para teclado ←/→ cuando hay overflow
+  · focus-visible outline lavender en track y frames
+
+── Marco tipo foto impresa (referencia) ──
+Efecto deseado: borde blanco fino (~2–3px) pegado a la imagen, como print
+sobre fondo void — NO polaroid SaaS con rounded-xl.
+
+Implementación sugerida (tokens, sin hex):
+  · padding interno en .prod-personal__frame: var(--spacing-1) o --spacing-2
+  · background del marco: var(--color-canvas)
+  · imagen dentro con object-fit: cover, sin border-radius grande
+  · sombra sutil tintada void/shadow debajo del marco (box-shadow OKLCH §II)
+  · quitar doble outline (border + outline-offset) si compite con el look
+
+Opcional según referencia (solo si encaja editorialmente):
+  · label mono uppercase arriba de cada foto — datos en producciones.ts;
+    si no hay copy real, omitir footer, no lorem ipsum
+
+── Datos ──
+Usar PRODUCCIONES_FOTOS existente (webp en public/ugc/fotografias/).
+UgcKeyVisualCell sin footer (ya .kv-cell__footer { display: none }).
+next/image unoptimized, alt descriptivos actuales.
+
+── Restricciones ──
+- Solo tokens Tailwind / @theme — sin hex, sin py-[73px]
+- No inline styles salvo vars calculadas (--bento-delay ya existe)
+- No Framer Motion. No cambiar strip de videos ni header de sección.
+- No --persist ui-ux-pro-max
+- Mobile (<640px): mantener scroll horizontal (NO stack 1 col) para paridad
+  con referencia de fila única; frames un poco más estrechos en clamp
+
+Entregable:
+1) Explica decisión grid → flex track + scroll oculto
+2) Diff ProduccionesSection + globals.css
+3) Confirma: fotos en fila, scroll con rueda al hover, marco blanco visible
+4) Validar 375, 768, 1024, 1280, 1440px
+```
+
+---
+
+### Versión corta
+
+```
+§07 Producciones — fotografías personales como referencia adjunta:
+fila horizontal única (PRODUCCIONES_FOTOS), flex nowrap + overflow-x auto,
+scrollbar oculta, wheel → scrollLeft en hover, drag grab opcional.
+Marco blanco tipo impresión (padding canvas + sombra void), portrait 3/4.
+Refactor .prod-personal__grid → __track en ProduccionesSection + globals.css.
+MASTER §II §VI §VII. Mobile: fila con scroll, no stack. NO --persist.
+```
+
+---
+
+### Detalles técnicos
+
+#### Problema habitual (antes del fix)
+
+```css
+/* ❌ Grid 3 cols — no es fila única scrollable */
+.prod-personal__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+@media (max-width: 639px) {
+  .prod-personal__grid {
+    grid-template-columns: 1fr; /* stack — no paridad con referencia */
+  }
+}
+```
+
+#### Solución — track flex + overflow
+
+| Pieza | Clase / archivo | Rol |
+|-------|-----------------|-----|
+| Track | `.prod-personal__track` | `flex nowrap`, scroll oculto |
+| Frame | `.prod-personal__frame` | `flex-shrink: 0`, marco canvas |
+| Overflow | JS + `ResizeObserver` | Clases `--scrollable` / `--centered` |
+| Wheel | `wheel` listener `{ passive: false }` | `scrollLeft += deltaY` |
+| Drag | `pointerdown/move/up` | `cursor: grab` cuando hay overflow |
+| Teclado | `onKeyDown` ←/→ | `scrollBy` con step ~35% del ancho |
+
+#### CSS clave (`app/globals.css`)
+
+```css
+.prod-personal__track {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.prod-personal__track::-webkit-scrollbar { display: none; }
+
+.prod-personal__frame {
+  flex-shrink: 0;
+  width: clamp(11rem, 22vw, 16rem);
+  aspect-ratio: 3 / 4;
+  padding: var(--spacing-1);
+  background: var(--color-canvas);
+  box-shadow: 0 1px 2px oklch(0.148 0.069 328 / 0.30),
+              0 6px 16px oklch(0.148 0.069 328 / 0.22);
+}
+```
+
+#### Wheel handler (esquema)
+
+```tsx
+const onWheel = (event: WheelEvent) => {
+  if (!hasOverflowRef.current || event.deltaY === 0) return
+  event.preventDefault()
+  track.scrollLeft += event.deltaY
+}
+track.addEventListener('wheel', onWheel, { passive: false })
+```
+
+#### Breakpoints a probar
+
+| Ancho | Qué verificar |
+|-------|----------------|
+| 375px | Fila con scroll, marco canvas visible, frames ~9rem |
+| 768px | Wheel horizontal funciona al hover |
+| 1280px | Si caben todas → `--centered`; si no → scroll |
+| 1440px | Sin scroll horizontal forzado si hay espacio |
+
+#### Errores que el agente debe evitar
+
+- Volver a `grid` o stack en mobile  
+- Scrollbar visible (falta `::-webkit-scrollbar`)  
+- Wheel sin `{ passive: false }` → no hace `preventDefault`  
+- Marco con `rounded-xl` o sombra `shadow-lg` genérica  
+- Lorem ipsum o captions inventados bajo cada foto  
+
+---
+
+### Frases clave
+
+| Concepto | Frase para el prompt |
+|----------|---------------------|
+| Fila única | *"flex nowrap, una fila, flex-shrink: 0 en cada frame"* |
+| Scroll oculto | *"overflow-x auto + scrollbar-width none + webkit-scrollbar display none"* |
+| Rueda mouse | *"onWheel en track: scrollLeft += deltaY, preventDefault si hay overflow"* |
+| Marco foto | *"padding canvas + borde fino tipo impresión, sombra void, sin rounded-xl"* |
+| No regresión | *"no tocar prod-strip ni header; mantener bento-cell observer"* |
+| Mobile | *"mantener fila horizontal con scroll, no grid 1 col"* |
+| Datos | *"PRODUCCIONES_FOTOS en lib/producciones.ts"* |
+
+---
+
+### Archivos implicados
+
+| Archivo | Qué cambia |
+|---------|------------|
+| `components/sections/ProduccionesSection.tsx` | `trackRef`, wheel, drag, teclado |
+| `app/globals.css` | `.prod-personal__track`, `.prod-personal__frame` |
+| `lib/producciones.ts` | Array de fotos (5 webp) |
+| `lib/content.ts` | `personalPhotosLabel`, `personalPhotosAriaLabel` |
+
+---
+
+### Variantes del mismo caso
+
+**Solo ajustar tamaño de frames (scroll ya funciona):**
+
+```
+En globals.css ajusta clamp de .prod-personal__frame (9rem–16rem).
+No cambies wheel ni estructura del track. MASTER §IV. Valida 375 y 1280px.
+```
+
+**Regresión — volvió el grid 3 cols:**
+
+```
+Audita §07 fotografías personales: debe ser .prod-personal__track flex,
+no .prod-personal__grid. Ver doc/ejemplos.md §8 y §8c.
+```
+
+**Follow-up si el wheel no responde:**
+
+```
+El scroll con rueda no funciona en .prod-personal__track.
+Implementa wheel listener con { passive: false }, scrollLeft += deltaY
+solo si scrollWidth > clientWidth. Ver doc/ejemplos.md §8 detalles técnicos.
+```
+
+---
+
+## 8c. Estado implementado — memoria de sesión
+
+**Objetivo de esta sección:** Registrar qué quedó en código tras el prompt §8, para retomar sin releer el chat.
+
+---
+
+### Qué se construyó
+
+| Pieza | Archivo | Notas |
+|-------|---------|-------|
+| Tira horizontal | `ProduccionesSection.tsx` | `.prod-personal__track` reemplaza `__grid` |
+| Wheel + drag | `ProduccionesSection.tsx` | `ResizeObserver`, `hasOverflowRef`, grab/grabbing |
+| Teclado | `ProduccionesSection.tsx` | `tabIndex={0}`, ←/→ con `scrollBy` |
+| Marco impresión | `app/globals.css` | `background: var(--color-canvas)`, sombra void |
+| Datos | `lib/producciones.ts` | 5 fotos en `public/ugc/fotografias/*.webp` |
+
+### Clases CSS (valores actuales)
+
+```css
+.prod-personal__track { flex nowrap; overflow-x auto; scrollbar-width: none; }
+.prod-personal__track--scrollable { cursor: grab; }
+.prod-personal__track--centered { justify-content: center; } /* ≥1280px si caben */
+.prod-personal__frame {
+  width: clamp(9rem, 18vw, 16rem); /* sm+: clamp(11rem, 22vw, 16rem) */
+  aspect-ratio: 3 / 4;
+  padding: var(--spacing-1);
+  background: var(--color-canvas);
+}
+```
+
+### Prompt corto para auditar / pulir (sin reimplementar)
+
+```
+Lee doc/ejemplos.md §8c.
+
+Audita #producciones fotografías personales en localhost:
+fila única .prod-personal__track, scroll oculto, wheel + drag si overflow,
+marco canvas tipo impresión. Sin volver a grid 3 cols ni stack mobile.
+MASTER §VII. Entregable: checklist + fixes mínimos.
+```
+
+### Pendientes conocidos
+
+- Captions bajo cada foto (como referencia Canva) — no implementados; footer `kv-cell` oculto a propósito
+- Añadir/quitar fotos editando `lib/producciones.ts` únicamente
+
+---
+
+*Última actualización: 2026-05-29*
