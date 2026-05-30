@@ -3,11 +3,10 @@
 // ─────────────────────────────────────────────────────────────────────────────
 // sections/CorteFinoSection.tsx — §05 Diseño gráfico para Cortefino
 //
-// Layout:
+// Layout Opción B — spread editorial:
 //   Header
-//   Row 1: 3 carruseles interactivos uniformes con drag tipo IG
-//   Row 2: IG strip — 5 animaciones, tira horizontal con scroll (como prod-personal)
-//   Row 3: 2 piezas estáticas (1fr + 1fr, altura acotada)
+//   Row 1: 3 carruseles (5+4+3) · misma altura 4:5
+//   Row 2: bloque social 8+4 — animaciones IG | publicaciones apiladas
 // ─────────────────────────────────────────────────────────────────────────────
 
 import { useEffect, useRef } from 'react'
@@ -26,6 +25,8 @@ import {
 import { useHorizontalScrollTrack } from '@/lib/useHorizontalScrollTrack'
 import { animationVideos, CORTEFINO_IG_PROFILE } from '@/lib/videos'
 
+const BENTO_STAGGER_MS = 80
+
 export default function CorteFinoSection() {
   const sectionRef = useRef<HTMLElement>(null)
   const animTrackRef = useRef<HTMLDivElement>(null)
@@ -42,20 +43,30 @@ export default function CorteFinoSection() {
   useEffect(() => {
     const section = sectionRef.current
     if (!section) return
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+
+    const cells = section.querySelectorAll<HTMLElement>('.bento-cell')
+    cells.forEach((cell, index) => {
+      cell.style.setProperty('--bento-delay', `${index * BENTO_STAGGER_MS}ms`)
+    })
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      cells.forEach((cell) => cell.classList.add('bento-cell--visible'))
+      return
+    }
 
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (!entry.isIntersecting) return
-          section.querySelectorAll<HTMLElement>('.bento-cell').forEach((cell, i) => {
-            setTimeout(() => cell.classList.add('bento-cell--visible'), i * 80)
-          })
+          section
+            .querySelectorAll<HTMLElement>('.bento-cell')
+            .forEach((cell) => cell.classList.add('bento-cell--visible'))
           observer.disconnect()
         })
       },
-      { threshold: 0.08 },
+      { threshold: 0.08, rootMargin: '0px 0px -40px 0px' },
     )
+
     observer.observe(section)
     return () => observer.disconnect()
   }, [])
@@ -70,98 +81,105 @@ export default function CorteFinoSection() {
       <div className="container-editorial">
 
         {/* ── Header ──────────────────────────────────────────────────────── */}
-        <header className="client-header bento-cell" data-col="0">
+        <header className="client-header bento-cell">
           <SectionLabel
             index={CORTEFINO_COPY.sectionIndex}
             text={CORTEFINO_COPY.sectionLabel}
             lineFull
-            className="mb-4"
+            className="client-header__label"
           />
-          <h2
-            className={[
-              'font-display font-black text-petal uppercase',
-              'text-[clamp(2.25rem,5vw,4.5rem)] leading-[0.9] tracking-[-0.035em]',
-            ].join(' ')}
-          >
+          <h2 className="type-display-section text-petal">
             {CORTEFINO_COPY.headingMain}
             <br />
-            <em className="font-serif italic font-normal normal-case text-magenta text-[1.05em] tracking-[-0.02em]">
+            <em className="type-hero-serif text-magenta">
               {CORTEFINO_COPY.headingAccent}
             </em>
           </h2>
-          <p className="mt-6 text-sm font-mono text-petal/50 max-w-[46ch] leading-relaxed">
+          <p className="type-lead client-header__intro">
             {CORTEFINO_COPY.intro}
           </p>
         </header>
 
-        {/* ── Row 1: 3 carruseles ─────────────────────────────────────────── */}
-        <div className="cf2-row cf2-row--carousels">
-          {cortefinoCarouselSliders.map((slider, i) => (
-            <div
-              key={slider.title}
-              className="cf2-carousel-cell bento-cell"
-              data-col={String(i)}
-            >
-              <CarouselSlider
-                {...slider}
-                igUrl={cortefinoCarousels[i]?.igUrl}
-              />
-            </div>
-          ))}
-        </div>
+        <div className="cf2-stack">
 
-        {/* ── Row 2: IG strip — 5 animaciones, scroll horizontal ──────────── */}
-        <div className="cf2-ig-strip">
-          <div className="cf2-ig-strip__head">
-            <p className="cf2-ig-strip__label" aria-hidden="true">
-              {CORTEFINO_COPY.igStrip.label}
-            </p>
-            <a
-              href={CORTEFINO_IG_PROFILE}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="cf2-ig-strip__handle"
-              aria-label={CORTEFINO_COPY.igStrip.profileAriaLabel}
-            >
-              {CORTEFINO_COPY.igStrip.handle}
-            </a>
-          </div>
-          <p className="cf2-ig-strip__scroll-hint" aria-hidden="true">
-            {CORTEFINO_COPY.igStrip.scrollHint}
-          </p>
-          <div
-            ref={animTrackRef}
-            className="cf2-ig-row"
-            aria-label={CORTEFINO_COPY.igStrip.animationsAriaLabel}
-            tabIndex={0}
-            onKeyDown={handleAnimTrackKeyDown}
-          >
-            {animationVideos.map((anim) => (
-              <div key={anim.id} className="cf2-ig-frame">
-                <AnimationCell video={anim} autoplay />
+          {/* ── Row 1: carruseles — ancho asimétrico, altura unificada ───── */}
+          <div className="cf2-row cf2-row--carousels">
+            {cortefinoCarouselSliders.map((slider, index) => (
+              <div
+                key={slider.title}
+                className={[
+                  'cf2-carousel-cell bento-cell',
+                  index === 0 ? 'cf2-carousel-cell--lead' : '',
+                ]
+                  .filter(Boolean)
+                  .join(' ')}
+              >
+                <CarouselSlider
+                  {...slider}
+                  igUrl={cortefinoCarousels[index]?.igUrl}
+                />
               </div>
             ))}
           </div>
-        </div>
 
-        {/* ── Row 3: 2 piezas estáticas ───────────────────────────────────── */}
-        <div className="cf2-row cf2-row--statics">
-          {cortefinoStatics.map((piece, i) => (
-            <div key={piece.id} className="bento-cell" data-col={String(i + 8)}>
-              <UgcKeyVisualCell
-                src={getCortefinoStaticSrc(piece)}
-                alt={piece.alt}
-                client={piece.client}
-                title={piece.title}
-                category={piece.category}
-                mediaVariant="landscape"
-                objectFit="contain"
+          {/* ── Row 2: spread social — animaciones (8) + publicaciones (4) ── */}
+          <div className="cf2-social bento-cell">
+            <div className="cf2-social__head">
+              <p className="cf2-social__label" aria-hidden="true">
+                {CORTEFINO_COPY.igStrip.label}
+              </p>
+              <a
                 href={CORTEFINO_IG_PROFILE}
-              />
+                target="_blank"
+                rel="noopener noreferrer"
+                className="cf2-social__handle"
+                aria-label={CORTEFINO_COPY.igStrip.profileAriaLabel}
+              >
+                {CORTEFINO_COPY.igStrip.handle}
+              </a>
             </div>
-          ))}
-        </div>
 
+            <div className="cf2-social__anims">
+              <p className="cf2-social__scroll-hint" aria-hidden="true">
+                {CORTEFINO_COPY.igStrip.scrollHint}
+              </p>
+              <div
+                ref={animTrackRef}
+                className="cf2-ig-row"
+                aria-label={CORTEFINO_COPY.igStrip.animationsAriaLabel}
+                tabIndex={0}
+                onKeyDown={handleAnimTrackKeyDown}
+              >
+                {animationVideos.map((anim) => (
+                  <div key={anim.id} className="cf2-ig-frame">
+                    <AnimationCell video={anim} autoplay />
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <aside
+              className="cf2-social__statics"
+              aria-label="Publicaciones estáticas Cortefino"
+            >
+              {cortefinoStatics.map((piece) => (
+                <div key={piece.id} className="cf2-static-cell">
+                  <UgcKeyVisualCell
+                    src={getCortefinoStaticSrc(piece)}
+                    alt={piece.alt}
+                    client={piece.client}
+                    title={piece.title}
+                    category={piece.category}
+                    mediaVariant="landscape"
+                    objectFit="cover"
+                    href={CORTEFINO_IG_PROFILE}
+                  />
+                </div>
+              ))}
+            </aside>
+          </div>
+
+        </div>
       </div>
     </section>
   )

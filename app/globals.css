@@ -288,6 +288,16 @@ body {
   text-transform: uppercase;
 }
 
+/* Titular de sección cliente — escala intermedia (paridad DESIGN.md display-section) */
+.type-display-section {
+  font-family: var(--font-display);
+  font-size: var(--text-title-xl);
+  font-weight: 900;
+  line-height: 0.9;
+  letter-spacing: -0.035em;
+  text-transform: uppercase;
+}
+
 .type-display em {
   font-family: var(--font-serif);
   font-style: italic;
@@ -428,13 +438,19 @@ body {
 
 @media (min-width: 1024px) {
   :root {
-    --hero-photo-width:  clamp(20rem, 38vw, 26.25rem);
-    --hero-photo-height: clamp(36rem, 90%, 42rem);
     --hero-headline-top: clamp(36%, 38vh, 42%);
   }
 
   .hero-headline {
     width: min(100%, 48.75rem);
+  }
+
+  .hero-photo-wrap {
+    right: 8%;
+    bottom: 0;
+    width: auto;
+    height: 90%;
+    aspect-ratio: 420 / 630;
   }
 }
 
@@ -512,11 +528,11 @@ body {
   display: block;
   margin-top: 0.12em;
   font-family: var(--font-serif);
-  font-size: 0.55em;
+  font-size: 0.95em;
   font-style: italic;
   font-weight: 400;
   line-height: 1.05;
-  letter-spacing: -0.02em;
+  letter-spacing: 0.02em;
   text-transform: none;
   color: var(--color-lavender);
 }
@@ -612,15 +628,6 @@ body {
   pointer-events: none;
   mask-image: var(--gradient-photo-mask);
   -webkit-mask-image: var(--gradient-photo-mask);
-}
-
-@media (min-width: 1024px) {
-  .hero-photo-wrap {
-    right: 8%;
-    bottom: 0;
-    width: 420px;
-    height: 90%;
-  }
 }
 
 .hero-photo {
@@ -3467,6 +3474,15 @@ body {
   margin-bottom: var(--spacing-12);
 }
 
+.client-header__label {
+  margin-bottom: var(--spacing-4);
+}
+
+.client-header__intro {
+  margin-top: var(--spacing-6);
+  max-width: 46ch;
+}
+
 @media (min-width: 768px) {
   .client-header {
     margin-bottom: var(--spacing-16);
@@ -3474,83 +3490,77 @@ body {
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   §05 CORTEFINO — carruseles interactivos + estáticos + animaciones reales
-   Carruseles uniformes y responsive. cf2-* prefix.
+   §05 CORTEFINO — spread editorial Opción B
+   Fila 1: carruseles 5+4+3 · altura unificada 4:5
+   Fila 2: bloque social 8+4 — animaciones | publicaciones apiladas
    ═══════════════════════════════════════════════════════════════════════════ */
 
-/* ── Fila 1: 3 carruseles uniformes ──────────────────────────────────────── */
+/* ── Stack vertical — ritmo entre filas ──────────────────────────────────── */
+.cf2-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-10);
+}
+
+@media (min-width: 1024px) {
+  .cf2-stack {
+    gap: var(--spacing-12);
+  }
+}
+
+/* ── Fila 1: carruseles — 5fr + 4fr + 3fr, misma altura ─────────────────── */
 .cf2-row--carousels {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: 5fr 4fr 3fr;
   gap: var(--spacing-3);
   align-items: stretch;
 }
 
 .cf2-carousel-cell {
   min-width: 0;
+  display: flex;
+  flex-direction: column;
 }
 
-/* ── Fila 3: 2 piezas estáticas lado a lado ─────────────────────────────────
-   1fr + 1fr. Max-height en la media para que no sean excesivamente altas.
-   ─────────────────────────────────────────────────────────────────────── */
-.cf2-row--statics {
+.cf2-carousel-cell .cslider {
+  flex: 1;
+  height: 100%;
+}
+
+/* ── Fila 2: spread social — panel único 8+4 ─────────────────────────────── */
+.cf2-social {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--spacing-3);
+  grid-template-columns: 1fr;
+  grid-template-areas:
+    'head'
+    'anims'
+    'statics';
+  gap: var(--spacing-4);
+  padding: var(--spacing-6);
+  background: var(--color-abyss);
+  border: 1px solid oklch(0.722 0.177 306 / 0.1);
+  --cf2-ig-slide-w: 12.5rem;
 }
 
-/* Estáticos: relación editorial ancha, sin flex-grow que rompa el grid */
-.cf2-row--statics > .bento-cell {
-  align-self: start;
-  min-width: 0;
-}
-
-.cf2-row--statics .kv-cell--landscape .kv-cell__media {
-  flex: 0 0 auto;
-  aspect-ratio: 21 / 9;
-  max-height: 25rem;
-  width: 100%;
-  overflow: hidden;
-}
-
-/* ── Fila 3: IG strip — fila única de 5 animaciones ──────────────────────── */
-.cf2-ig-strip {
-  margin-top: var(--spacing-5);
-  position: relative;
-  /* Ancho fijo por slide — nunca repartir 100%/5 (recorta sin scroll claro) */
-  --cf2-ig-slide-w: 11.25rem;
-}
-
-@media (min-width: 768px) {
-  .cf2-ig-strip {
-    --cf2-ig-slide-w: 12rem;
-  }
-}
-
-@media (min-width: 1200px) {
-  .cf2-ig-strip {
-    --cf2-ig-slide-w: 12.5rem;
-  }
-}
-
-.cf2-ig-strip__head {
+.cf2-social__head {
+  grid-area: head;
   display: flex;
   align-items: baseline;
   justify-content: space-between;
-  margin-bottom: var(--spacing-3);
+  gap: var(--spacing-3);
 }
 
-.cf2-ig-strip__label {
+.cf2-social__label {
   font-family: var(--font-display);
-  font-size: var(--text-micro);
+  font-size: var(--text-label);
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.14em;
   color: var(--color-petal);
-  opacity: 0.3;
+  opacity: 0.4;
 }
 
-.cf2-ig-strip__handle {
+.cf2-social__handle {
   font-family: var(--font-mono);
   font-size: var(--text-nano);
   color: var(--color-lavender);
@@ -3559,16 +3569,22 @@ body {
   transition: opacity var(--duration-fast);
 }
 
-.cf2-ig-strip__handle:hover {
+.cf2-social__handle:hover {
   opacity: 1;
 }
 
-.cf2-ig-strip__handle:focus-visible {
+.cf2-social__handle:focus-visible {
   outline: 2px solid var(--color-lavender);
   outline-offset: 3px;
 }
 
-.cf2-ig-strip__scroll-hint {
+.cf2-social__anims {
+  grid-area: anims;
+  position: relative;
+  min-width: 0;
+}
+
+.cf2-social__scroll-hint {
   display: none;
   margin: 0 0 var(--spacing-2);
   font-family: var(--font-mono);
@@ -3578,11 +3594,48 @@ body {
   color: oklch(0.934 0.030 50 / 0.35);
 }
 
-.cf2-ig-strip:has(.cf2-ig-row--scrollable) .cf2-ig-strip__scroll-hint {
+.cf2-social__anims:has(.cf2-ig-row--scrollable) .cf2-social__scroll-hint {
   display: block;
 }
 
-/* Tira horizontal — 5 slides, scroll + snap (paridad prod-personal) */
+.cf2-social__statics {
+  grid-area: statics;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--spacing-3);
+  min-width: 0;
+}
+
+/* ── Publicaciones en columna lateral ────────────────────────────────────── */
+.cf2-static-cell {
+  min-width: 0;
+  border: 1px solid oklch(0.722 0.177 306 / 0.12);
+  background: oklch(0.148 0.069 328 / 0.55);
+  display: flex;
+  flex-direction: column;
+}
+
+.cf2-static-cell .kv-cell {
+  flex: 1;
+  min-height: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.cf2-static-cell .kv-cell--landscape .kv-cell__media {
+  flex: 1 1 0;
+  min-height: 0;
+  width: 100%;
+  overflow: hidden;
+}
+
+.cf2-static-cell .kv-cell__footer {
+  padding: var(--spacing-2) var(--spacing-3);
+  flex-shrink: 0;
+}
+
+/* Tira horizontal — animaciones IG */
 .cf2-ig-row {
   display: flex;
   flex-wrap: nowrap;
@@ -3610,7 +3663,6 @@ body {
 
 .cf2-ig-row--scrollable {
   cursor: grab;
-  /* Asoma el siguiente slide para indicar que hay más */
   padding-inline-end: calc(var(--cf2-ig-slide-w) * 0.28);
 }
 
@@ -3619,8 +3671,7 @@ body {
   scroll-snap-type: none;
 }
 
-/* Degradado en el borde derecho cuando hay overflow */
-.cf2-ig-strip:has(.cf2-ig-row--scrollable)::after {
+.cf2-social__anims:has(.cf2-ig-row--scrollable)::after {
   content: '';
   position: absolute;
   right: 0;
@@ -3630,8 +3681,8 @@ body {
   pointer-events: none;
   background: linear-gradient(
     to left,
-    var(--color-void) 0%,
-    oklch(0.148 0.069 328 / 0.72) 45%,
+    var(--color-abyss) 0%,
+    oklch(0.257 0.101 299 / 0.72) 45%,
     transparent 100%
   );
 }
@@ -3649,6 +3700,41 @@ body {
   width: var(--cf2-ig-slide-w);
   scroll-snap-align: start;
   scroll-snap-stop: normal;
+}
+
+@media (min-width: 768px) {
+  .cf2-social {
+    padding: var(--spacing-8) var(--spacing-6);
+    --cf2-ig-slide-w: 14rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .cf2-social {
+    grid-template-columns: 8fr 4fr;
+    grid-template-areas:
+      'head head'
+      'anims statics';
+    gap: var(--spacing-3) var(--spacing-4);
+    align-items: stretch;
+    --cf2-ig-slide-w: clamp(11.5rem, 12vw, 15rem);
+  }
+
+  .cf2-social__statics {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-3);
+    min-height: 0;
+  }
+
+  .cf2-static-cell {
+    flex: 1 1 0;
+    min-height: 0;
+  }
+
+  .cf2-static-cell .kv-cell--landscape .kv-cell__media {
+    aspect-ratio: auto;
+  }
 }
 
 /* ── Viewport grab cursor ────────────────────────────────────────────────── */
@@ -3683,16 +3769,25 @@ body {
 @media (max-width: 1279px) {
   .cf2-row--carousels {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: stretch;
+  }
+
+  .cf2-carousel-cell--lead {
+    grid-column: 1 / -1;
   }
 }
 
 @media (max-width: 767px) {
+  .cf2-stack {
+    gap: var(--spacing-8);
+  }
+
   .cf2-row--carousels {
     grid-template-columns: 1fr;
   }
 
-  .cf2-row--statics {
-    grid-template-columns: 1fr;
+  .cf2-social {
+    padding: var(--spacing-5);
   }
 }
 

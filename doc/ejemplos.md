@@ -7,7 +7,7 @@ Casos concretos del portafolio con **cuatro partes** cada uno:
 3. **Detalles técnicos** — qué tocar en el código y por qué  
 4. **Frases clave** — palabras que activan el comportamiento correcto  
 
-Guía general → [README.md](./README.md) · Plantillas por §MASTER → [prompts.md](./prompts.md) · Impeccable + skills → [flujo-skills.md](./flujo-skills.md)
+Guía general → [README.md](./README.md) · Plantillas por §MASTER → [prompts.md](./prompts.md) · Impeccable + skills → [flujo-skills.md](./flujo-skills.md) · Metodología y skill global → [skill-design-prompt-spec.md](./skill-design-prompt-spec.md)
 
 ---
 

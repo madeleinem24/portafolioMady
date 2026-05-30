@@ -11,6 +11,7 @@ Documentación para escribir instrucciones claras a Cursor (Agent / Composer) al
 | [README.md](./README.md) | Flujo de trabajo, jerarquía de archivos y skills, cómo armar cualquier prompt |
 | [prompts.md](./prompts.md) | Plantillas listas para copiar por área del `MASTER.md` |
 | [ejemplos.md](./ejemplos.md) | **Casos reales detallados** — prompt completo, corto, técnico y frases clave |
+| [skill-design-prompt-spec.md](./skill-design-prompt-spec.md) | **Skill global `design-prompt-spec`** — metodología 4 partes, instalación, uso en otros proyectos |
 | [flujo-skills.md](./flujo-skills.md) | **Impeccable + ui-ux-pro-max + MASTER** — quién manda, flujos combinados, prompts |
 | [referencia-tailwind.md](./referencia-tailwind.md) | Tabla rápida MASTER → `globals.css` → clases Tailwind v4 |
 | [../videos/README.md](../videos/README.md) | Compresión y registro de **videos** (`ugc_mady/` → Cloudinary) |
@@ -51,6 +52,7 @@ components/               ← Solo clases derivadas de tokens; sin hex ni arbitr
 | **MASTER.md** | `design-system/` | Siempre. Fuente de verdad del proyecto. |
 | **Impeccable** | `.agents/skills/impeccable/` | Rediseñar, auditar, pulir UI **respetando** PRODUCT + DESIGN del proyecto. |
 | **UI/UX Pro Max** | `.cursor/skills/ui-ux-pro-max/` | Patrones UX, benchmarks, checklist layout/spacing. **No** `--persist` (no regenerar MASTER). |
+| **design-prompt-spec** | `~/.cursor/skills/` · `~/.agents/skills/` (personal) | Elaborar prompts en 4 partes desde captura/mock. Ver [skill-design-prompt-spec.md](./skill-design-prompt-spec.md). |
 
 **Regla:** En este repo, `MASTER.md` gana sobre recomendaciones genéricas de ui-ux-pro-max.
 
@@ -143,7 +145,8 @@ Entregable: [checklist | código | propuesta primero].
 ```
 
 Más plantillas por área → [prompts.md](./prompts.md).  
-Casos reales paso a paso → [ejemplos.md](./ejemplos.md).
+Casos reales paso a paso → [ejemplos.md](./ejemplos.md).  
+Metodología y skill global → [skill-design-prompt-spec.md](./skill-design-prompt-spec.md).
 
 ---
 

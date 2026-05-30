@@ -23,7 +23,7 @@ import type {
 export const HERO_COPY: HeroCopy = {
   tag:              'Diseñadora Gráfica & Creadora UGC',
   nameMain:         'Madeleine',
-  nameAccent:       'morales',
+  nameAccent:       'Morales',
   descriptionLine1: 'Multimedia · Diseño · Producción Audiovisual · Contenido UGC.',
   descriptionLine2: 'Creatividad con propósito, diseño con alma.',
   cta: {
@@ -213,7 +213,7 @@ export const CORTEFINO_COPY: CortefinoSectionCopy = {
   ariaLabel:     'Cliente: Cortefino — diseño gráfico',
   igStrip: {
     label:               'Contenido IG',
-    handle:              '@cortefino.ec',
+    handle:              '@cortefino.ecu',
     profileAriaLabel:    'Ver perfil de Cortefino en Instagram',
     animationsAriaLabel: 'Animaciones de marca para Instagram — Cortefino',
     scrollHint:          'Desliza para ver las 5 piezas',
