@@ -3,10 +3,11 @@
 // ─────────────────────────────────────────────────────────────────────────────
 // sections/CorteFinoSection.tsx — §05 Diseño gráfico para Cortefino
 //
-// Layout Opción B — spread editorial:
+// Layout editorial asimétrico:
 //   Header
-//   Row 1: 3 carruseles (5+4+3) · misma altura 4:5
-//   Row 2: bloque social 8+4 — animaciones IG | publicaciones apiladas
+//   Row 1: 3 carruseles (5fr + 4fr + 3fr) — drag tipo IG
+//   Row 2: IG strip — panel abyss + 5 animaciones con scroll horizontal
+//   Row 3: publicaciones — ancho Serie 02 (4fr) · móvil Serie 03 (3fr)
 // ─────────────────────────────────────────────────────────────────────────────
 
 import { useEffect, useRef } from 'react'
@@ -102,7 +103,7 @@ export default function CorteFinoSection() {
 
         <div className="cf2-stack">
 
-          {/* ── Row 1: carruseles — ancho asimétrico, altura unificada ───── */}
+          {/* ── Row 1: carruseles asimétricos ─────────────────────────────── */}
           <div className="cf2-row cf2-row--carousels">
             {cortefinoCarouselSliders.map((slider, index) => (
               <div
@@ -122,61 +123,56 @@ export default function CorteFinoSection() {
             ))}
           </div>
 
-          {/* ── Row 2: spread social — animaciones (8) + publicaciones (4) ── */}
-          <div className="cf2-social bento-cell">
-            <div className="cf2-social__head">
-              <p className="cf2-social__label" aria-hidden="true">
+          {/* ── Row 2: IG strip — animaciones de marca ────────────────────── */}
+          <div className="cf2-ig-strip bento-cell">
+            <div className="cf2-ig-strip__head">
+              <p className="cf2-ig-strip__label" aria-hidden="true">
                 {CORTEFINO_COPY.igStrip.label}
               </p>
               <a
                 href={CORTEFINO_IG_PROFILE}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="cf2-social__handle"
+                className="cf2-ig-strip__handle"
                 aria-label={CORTEFINO_COPY.igStrip.profileAriaLabel}
               >
                 {CORTEFINO_COPY.igStrip.handle}
               </a>
             </div>
-
-            <div className="cf2-social__anims">
-              <p className="cf2-social__scroll-hint" aria-hidden="true">
-                {CORTEFINO_COPY.igStrip.scrollHint}
-              </p>
-              <div
-                ref={animTrackRef}
-                className="cf2-ig-row"
-                aria-label={CORTEFINO_COPY.igStrip.animationsAriaLabel}
-                tabIndex={0}
-                onKeyDown={handleAnimTrackKeyDown}
-              >
-                {animationVideos.map((anim) => (
-                  <div key={anim.id} className="cf2-ig-frame">
-                    <AnimationCell video={anim} autoplay />
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <aside
-              className="cf2-social__statics"
-              aria-label="Publicaciones estáticas Cortefino"
+            <p className="cf2-ig-strip__scroll-hint" aria-hidden="true">
+              {CORTEFINO_COPY.igStrip.scrollHint}
+            </p>
+            <div
+              ref={animTrackRef}
+              className="cf2-ig-row"
+              aria-label={CORTEFINO_COPY.igStrip.animationsAriaLabel}
+              tabIndex={0}
+              onKeyDown={handleAnimTrackKeyDown}
             >
-              {cortefinoStatics.map((piece) => (
-                <div key={piece.id} className="cf2-static-cell">
-                  <UgcKeyVisualCell
-                    src={getCortefinoStaticSrc(piece)}
-                    alt={piece.alt}
-                    client={piece.client}
-                    title={piece.title}
-                    category={piece.category}
-                    mediaVariant="landscape"
-                    objectFit="cover"
-                    href={CORTEFINO_IG_PROFILE}
-                  />
+              {animationVideos.map((anim) => (
+                <div key={anim.id} className="cf2-ig-frame">
+                  <AnimationCell video={anim} autoplay />
                 </div>
               ))}
-            </aside>
+            </div>
+          </div>
+
+          {/* ── Row 3: publicaciones estáticas — paridad visual IG 4:5 ─────── */}
+          <div className="cf2-row cf2-row--statics">
+            {cortefinoStatics.map((piece) => (
+              <div key={piece.id} className="cf2-static-cell bento-cell">
+                <UgcKeyVisualCell
+                  src={getCortefinoStaticSrc(piece)}
+                  alt={piece.alt}
+                  client={piece.client}
+                  title={piece.title}
+                  category={piece.category}
+                  mediaVariant="landscape"
+                  objectFit="cover"
+                  href={CORTEFINO_IG_PROFILE}
+                />
+              </div>
+            ))}
           </div>
 
         </div>

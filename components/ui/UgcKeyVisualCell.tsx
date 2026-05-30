@@ -2,10 +2,12 @@
 // components/ui/UgcKeyVisualCell.tsx — Celda de imagen editorial para Key Visuals,
 // carruseles estáticos, MUPI, merch y piezas de campaña.
 // Ratio flexible · overlay en hover · badge de categoría.
-// Server Component — sin hooks.
+// Lightbox opcional vía KeyVisualLightboxMedia (client).
 // ─────────────────────────────────────────────────────────────────────────────
 
 import Image from 'next/image'
+
+import KeyVisualLightboxMedia from '@/components/ui/KeyVisualLightboxMedia'
 
 export interface UgcKeyVisualCellProps {
   /** URL relativa a /public o URL absoluta */
@@ -22,8 +24,10 @@ export interface UgcKeyVisualCellProps {
   imgHeight?: number
   /** object-fit de la imagen (default cover) */
   objectFit?: 'cover' | 'contain'
-  /** URL opcional: hace clickeable la media (por ejemplo, post/perfil IG). */
+  /** URL opcional: enlace externo (p. ej. IG). Desactiva lightbox. */
   href?: string
+  /** Abrir imagen en modal a tamaño completo (default: true si no hay href). */
+  lightbox?: boolean
   /**
    * landscape — contenedor 21:9 con altura máxima (Corte Fino estáticos).
    * Usa next/image fill + object-cover dentro del aspect box.
@@ -43,10 +47,12 @@ export default function UgcKeyVisualCell({
   imgHeight = 600,
   objectFit = 'cover',
   href,
+  lightbox,
   mediaVariant = 'default',
   className = '',
 }: UgcKeyVisualCellProps) {
   const isLandscape = mediaVariant === 'landscape'
+  const useLightbox = lightbox ?? !href
   const classes = [
     'kv-cell',
     isLandscape ? 'kv-cell--landscape' : '',
@@ -87,6 +93,16 @@ export default function UgcKeyVisualCell({
               />
             )}
           </a>
+        ) : useLightbox ? (
+          <KeyVisualLightboxMedia
+            src={src}
+            alt={alt}
+            title={title}
+            imgWidth={imgWidth}
+            imgHeight={imgHeight}
+            objectFit={objectFit}
+            isLandscape={isLandscape}
+          />
         ) : (
           <>
             {isLandscape ? (

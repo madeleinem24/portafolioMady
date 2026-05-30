@@ -261,6 +261,15 @@ export const PRODUCCIONES_COPY: ProduccionesSectionCopy = {
   excludedVideoIds:        ['prod-pony-nebula'],
 }
 
+// ── Lightbox (imágenes ampliadas) ───────────────────────────────────────────────
+
+export const LIGHTBOX_COPY = {
+  openLabel:      'Ver imagen ampliada',
+  closeLabel:     'Cerrar imagen ampliada',
+  closeSymbol:    '×',
+  viewingPrefix:  'Vista ampliada:',
+} as const
+
 // ── Marquee ─────────────────────────────────────────────────────────────────────
 
 export const SLIDER_ARIA_LABEL = 'Disciplinas de diseño'

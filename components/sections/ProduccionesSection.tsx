@@ -48,6 +48,13 @@ export default function ProduccionesSection() {
 
     const onPointerDown = (event: PointerEvent) => {
       if (!hasOverflowRef.current || event.button !== 0) return
+      const target = event.target
+      if (
+        target instanceof Element &&
+        target.closest('[data-lightbox-trigger], button, a')
+      ) {
+        return
+      }
       dragRef.current = {
         active: true,
         startX: event.clientX,
