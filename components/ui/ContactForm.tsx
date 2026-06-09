@@ -2,6 +2,8 @@
 
 import { FormEvent, useState } from 'react'
 
+import { isContactFormConfigured, sendContactEmail } from '@/lib/contact-form'
+
 interface ContactFormProps {
   recipientEmail: string
   ctaLabel: string
@@ -37,29 +39,14 @@ export default function ContactForm({
     setStatusTone('idle')
 
     try {
-      const payload = new FormData()
-      payload.append('name', form.name)
-      payload.append('email', form.email)
-      payload.append('message', form.message)
-      payload.append('_subject', `Nuevo mensaje del portafolio - ${form.name}`)
-      payload.append('_captcha', 'false')
-      payload.append('_template', 'table')
-      payload.append('_replyto', form.email)
-
-      const response = await fetch(
-        `https://formsubmit.co/ajax/${encodeURIComponent(recipientEmail)}`,
+      await sendContactEmail(
         {
-          method: 'POST',
-          headers: {
-            Accept: 'application/json',
-          },
-          body: payload,
-        }
+          name: form.name,
+          email: form.email,
+          message: form.message,
+        },
+        recipientEmail
       )
-
-      if (!response.ok) {
-        throw new Error('No se pudo enviar el mensaje.')
-      }
 
       setForm((prev) => ({
         ...prev,
@@ -68,10 +55,17 @@ export default function ContactForm({
         message: defaultTemplate,
       }))
       setStatusTone('success')
-      setStatusMessage('Mensaje enviado. Revisa tu Gmail en unos segundos.')
-    } catch {
+      setStatusMessage('Mensaje enviado. Revisa tu bandeja de entrada en unos segundos.')
+    } catch (error) {
       setStatusTone('error')
-      setStatusMessage('No pudimos enviarlo. Intenta de nuevo o usa WhatsApp.')
+      setStatusMessage(
+        isContactFormConfigured()
+          ? 'No pudimos enviarlo. Intenta de nuevo o usa WhatsApp.'
+          : 'El formulario aún no está configurado. Usa el correo o WhatsApp por ahora.'
+      )
+      if (process.env.NODE_ENV === 'development' && error instanceof Error) {
+        console.error(error.message)
+      }
     } finally {
       setIsSending(false)
     }
