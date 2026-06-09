@@ -1,8 +1,17 @@
 'use client'
 
-import { FormEvent, useState } from 'react'
+import { FormEvent, useEffect, useState } from 'react'
 
 import { isContactFormConfigured, sendContactEmail } from '@/lib/contact-form'
+import {
+  assertCooldownClear,
+  CONTACT_FORM_LIMITS,
+  ContactFormRejectedError,
+  getCooldownRemainingSeconds,
+  isHoneypotTriggered,
+  markContactFormSent,
+  validateAndSanitizeContactInput,
+} from '@/lib/contact-form-guard'
 
 interface ContactFormProps {
   recipientEmail: string
@@ -17,6 +26,7 @@ interface ContactFormState {
 }
 
 const INITIAL_STATUS = ''
+const SUCCESS_MESSAGE = 'Mensaje enviado. Revisa tu bandeja de entrada en unos segundos.'
 
 export default function ContactForm({
   recipientEmail,
@@ -28,9 +38,21 @@ export default function ContactForm({
     email: '',
     message: defaultTemplate,
   })
+  const [honeypot, setHoneypot] = useState('')
   const [isSending, setIsSending] = useState(false)
+  const [cooldownSeconds, setCooldownSeconds] = useState(0)
   const [statusMessage, setStatusMessage] = useState(INITIAL_STATUS)
   const [statusTone, setStatusTone] = useState<'idle' | 'success' | 'error'>('idle')
+
+  useEffect(() => {
+    const syncCooldown = () => {
+      setCooldownSeconds(getCooldownRemainingSeconds())
+    }
+
+    syncCooldown()
+    const intervalId = window.setInterval(syncCooldown, 1000)
+    return () => window.clearInterval(intervalId)
+  }, [])
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -39,30 +61,47 @@ export default function ContactForm({
     setStatusTone('idle')
 
     try {
-      await sendContactEmail(
-        {
-          name: form.name,
-          email: form.email,
-          message: form.message,
-        },
-        recipientEmail
-      )
+      if (isHoneypotTriggered(honeypot)) {
+        setForm({ name: '', email: '', message: defaultTemplate })
+        setStatusTone('success')
+        setStatusMessage(SUCCESS_MESSAGE)
+        return
+      }
 
-      setForm((prev) => ({
-        ...prev,
+      assertCooldownClear()
+
+      const payload = validateAndSanitizeContactInput({
+        name: form.name,
+        email: form.email,
+        message: form.message,
+        honeypot,
+      })
+
+      await sendContactEmail(payload, recipientEmail)
+
+      markContactFormSent()
+      setCooldownSeconds(getCooldownRemainingSeconds())
+
+      setForm({
         name: '',
         email: '',
         message: defaultTemplate,
-      }))
+      })
       setStatusTone('success')
-      setStatusMessage('Mensaje enviado. Revisa tu bandeja de entrada en unos segundos.')
+      setStatusMessage(SUCCESS_MESSAGE)
     } catch (error) {
       setStatusTone('error')
-      setStatusMessage(
-        isContactFormConfigured()
-          ? 'No pudimos enviarlo. Intenta de nuevo o usa WhatsApp.'
-          : 'El formulario aún no está configurado. Usa el correo o WhatsApp por ahora.'
-      )
+
+      if (error instanceof ContactFormRejectedError) {
+        setStatusMessage(error.message)
+      } else {
+        setStatusMessage(
+          isContactFormConfigured()
+            ? 'No pudimos enviarlo. Intenta de nuevo o usa WhatsApp.'
+            : 'El formulario aún no está configurado. Usa el correo o WhatsApp por ahora.'
+        )
+      }
+
       if (process.env.NODE_ENV === 'development' && error instanceof Error) {
         console.error(error.message)
       }
@@ -70,6 +109,13 @@ export default function ContactForm({
       setIsSending(false)
     }
   }
+
+  const isSubmitDisabled = isSending || cooldownSeconds > 0
+  const submitLabel = isSending
+    ? 'Enviando...'
+    : cooldownSeconds > 0
+      ? `Espera ${cooldownSeconds}s`
+      : ctaLabel
 
   return (
     <form className="contact-form" onSubmit={handleSubmit}>
@@ -85,6 +131,7 @@ export default function ContactForm({
             value={form.name}
             onChange={(event) => setForm((prev) => ({ ...prev, name: event.target.value }))}
             autoComplete="name"
+            maxLength={CONTACT_FORM_LIMITS.nameMax}
             required
           />
         </label>
@@ -100,6 +147,7 @@ export default function ContactForm({
             value={form.email}
             onChange={(event) => setForm((prev) => ({ ...prev, email: event.target.value }))}
             autoComplete="email"
+            maxLength={CONTACT_FORM_LIMITS.emailMax}
             required
           />
         </label>
@@ -114,6 +162,7 @@ export default function ContactForm({
             value={form.message}
             onChange={(event) => setForm((prev) => ({ ...prev, message: event.target.value }))}
             rows={7}
+            maxLength={CONTACT_FORM_LIMITS.messageMax}
             required
           />
         </label>
@@ -121,7 +170,9 @@ export default function ContactForm({
 
       <input
         type="text"
-        name="_honey"
+        name="company"
+        value={honeypot}
+        onChange={(event) => setHoneypot(event.target.value)}
         tabIndex={-1}
         autoComplete="off"
         aria-hidden="true"
@@ -137,8 +188,8 @@ export default function ContactForm({
           Usar plantilla
         </button>
 
-        <button type="submit" className="contact-cta" disabled={isSending}>
-          {isSending ? 'Enviando...' : ctaLabel}
+        <button type="submit" className="contact-cta" disabled={isSubmitDisabled}>
+          {submitLabel}
         </button>
       </div>
 
