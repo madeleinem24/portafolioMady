@@ -161,7 +161,7 @@ export default function ContactForm({
             className="contact-textarea"
             value={form.message}
             onChange={(event) => setForm((prev) => ({ ...prev, message: event.target.value }))}
-            rows={7}
+            rows={12}
             maxLength={CONTACT_FORM_LIMITS.messageMax}
             required
           />

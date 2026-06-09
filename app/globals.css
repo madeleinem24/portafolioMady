@@ -2419,7 +2419,8 @@ body {
 }
 
 .contact-textarea {
-  min-height: 10rem;
+  /* 12 líneas visibles: cabe la plantilla por defecto sin scroll */
+  min-height: calc(12 * 1.6em + 2 * var(--spacing-4));
   padding: var(--spacing-4);
   resize: vertical;
 }
